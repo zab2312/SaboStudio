@@ -1,0 +1,72 @@
+.bottom-cta-section {
+  padding: 100px 20px;
+}
+
+.bottom-cta-content {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.bottom-cta-title {
+  font-size: 42px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 24px;
+  line-height: 1.2;
+}
+
+.bottom-cta-text {
+  font-size: 20px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 32px;
+}
+
+.bottom-cta-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 40px;
+  background: #dc2626;
+  color: white;
+  border-radius: 12px;
+  font-size: 20px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(220, 38, 38, 0.4);
+  margin-bottom: 16px;
+}
+
+.bottom-cta-button:hover {
+  background: #b91c1c;
+  box-shadow: 0 6px 30px rgba(220, 38, 38, 0.6);
+  transform: translateY(-2px);
+}
+
+.bottom-cta-button svg {
+  color: white;
+}
+
+.bottom-cta-microcopy {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.6);
+  font-style: italic;
+}
+
+@media (max-width: 768px) {
+  .bottom-cta-title {
+    font-size: 32px;
+  }
+  
+  .bottom-cta-text {
+    font-size: 18px;
+  }
+  
+  .bottom-cta-button {
+    padding: 18px 32px;
+    font-size: 18px;
+  }
+}
+
