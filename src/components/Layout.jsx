@@ -1,5 +1,6 @@
 import Aurora from './Aurora'
 import Navbar from './Navbar'
+import GradualBlur from './GradualBlur'
 import './Layout.css'
 
 export default function Layout({ children }) {
@@ -17,6 +18,16 @@ export default function Layout({ children }) {
       <div className="layout-content">
         {children}
       </div>
+      <GradualBlur 
+        position="bottom"
+        target="page"
+        strength={2}
+        height="6rem"
+        divCount={5}
+        exponential={true}
+        opacity={1}
+        curve="bezier"
+      />
     </div>
   )
 }

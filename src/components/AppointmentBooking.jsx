@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { supabase } from '../lib/supabase'
-import { format, addDays, startOfWeek, eachDayOfInterval, isSameDay, parseISO, setHours, setMinutes } from 'date-fns'
+import { format, addDays, addWeeks, startOfWeek, eachDayOfInterval, isSameDay, parseISO, setHours, setMinutes } from 'date-fns'
 import hr from 'date-fns/locale/hr'
 import Section from './Section'
 import './AppointmentBooking.css'
@@ -16,13 +16,29 @@ export default function AppointmentBooking() {
   const [clientEmail, setClientEmail] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitSuccess, setSubmitSuccess] = useState(false)
+  const [weekOffset, setWeekOffset] = useState(0)
 
   const currentDate = new Date()
-  const weekStart = startOfWeek(currentDate, { weekStartsOn: 1 })
+  const baseWeekStart = startOfWeek(currentDate, { weekStartsOn: 1 })
+  const weekStart = addWeeks(baseWeekStart, weekOffset)
   const weekDays = eachDayOfInterval({
     start: weekStart,
     end: addDays(weekStart, 6)
   })
+
+  const handlePreviousWeek = () => {
+    if (weekOffset > 0) {
+      setWeekOffset(weekOffset - 1)
+      setSelectedDate(null)
+      setSelectedTime(null)
+    }
+  }
+
+  const handleNextWeek = () => {
+    setWeekOffset(weekOffset + 1)
+    setSelectedDate(null)
+    setSelectedTime(null)
+  }
 
   useEffect(() => {
     loadWorkingHours()
@@ -152,6 +168,34 @@ export default function AppointmentBooking() {
 
       <div className="appointment-booking">
         <div className="calendar-container">
+          <div className="calendar-header">
+            <motion.button
+              className="week-nav-button"
+              onClick={handlePreviousWeek}
+              disabled={weekOffset === 0}
+              whileHover={weekOffset > 0 ? { scale: 1.1 } : {}}
+              whileTap={weekOffset > 0 ? { scale: 0.9 } : {}}
+            >
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M15 18l-6-6 6-6"/>
+              </svg>
+            </motion.button>
+            <div className="week-info">
+              <span className="week-range">
+                {format(weekDays[0], 'dd.MM', { locale: hr })} - {format(weekDays[6], 'dd.MM.yyyy', { locale: hr })}
+              </span>
+            </div>
+            <motion.button
+              className="week-nav-button"
+              onClick={handleNextWeek}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+            >
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M9 18l6-6-6-6"/>
+              </svg>
+            </motion.button>
+          </div>
           <div className="calendar-week">
             {weekDays.map((day, index) => {
               const dayOfWeek = day.getDay() === 0 ? 6 : day.getDay() - 1

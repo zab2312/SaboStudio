@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { FileSearch, Calendar, TrendingUp, Smartphone, Zap, Target } from 'lucide-react'
 import Section from './Section'
+import GlareHover from './GlareHover'
 import './Hero.css'
 
 export default function Hero() {
@@ -64,13 +65,27 @@ export default function Hero() {
             return (
               <motion.div
                 key={index}
-                className="benefit-bullet"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.6 + index * 0.1 }}
               >
-                <Icon size={20} className="benefit-icon" />
-                <span>{bullet.text}</span>
+                <GlareHover
+                  width="100%"
+                  height="100%"
+                  background="rgba(255, 255, 255, 0.06)"
+                  borderRadius="12px"
+                  borderColor="rgba(255, 255, 255, 0.1)"
+                  glareColor="#ffffff"
+                  glareOpacity={0.3}
+                  glareAngle={-30}
+                  glareSize={300}
+                  transitionDuration={800}
+                  playOnce={false}
+                  className="benefit-bullet"
+                >
+                  <Icon size={20} className="benefit-icon" />
+                  <span>{bullet.text}</span>
+                </GlareHover>
               </motion.div>
             )
           })}

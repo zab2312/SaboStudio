@@ -15,6 +15,48 @@
   gap: 32px;
 }
 
+.calendar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.week-nav-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.week-nav-button:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.week-nav-button:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.week-info {
+  flex: 1;
+  text-align: center;
+}
+
+.week-range {
+  font-size: 16px;
+  font-weight: 600;
+  color: white;
+}
+
 .calendar-week {
   display: grid;
   grid-template-columns: repeat(7, 1fr);

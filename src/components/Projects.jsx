@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { ExternalLink } from 'lucide-react'
 import { supabase } from '../lib/supabase'
 import Section from './Section'
+import GlareHover from './GlareHover'
 import './Projects.css'
 
 function BounceCard({ project, index }) {
@@ -55,39 +56,53 @@ function BounceCard({ project, index }) {
       transition={{ duration: 0.6, delay: index * 0.1 }}
       whileHover={{ scale: 1.02 }}
     >
-      <div className="bounce-card-inner">
-        {project.image_url && (
-          <div className="project-image">
-            <img src={project.image_url} alt={project.title} />
-          </div>
-        )}
-        <div className="project-content">
-          <h3 className="project-title">{project.title}</h3>
-          <p className="project-description">{project.description}</p>
-          
-          <div className="project-technologies">
-            {project.technologies?.map((tech, i) => (
-              <span key={i} className="tech-tag">{tech}</span>
-            ))}
-          </div>
-          
-          <div className="project-meta">
-            <span className="project-time">⏱️ {project.development_time}</span>
-            {project.website_url && (
-              <a
-                href={project.website_url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="project-link"
-                onClick={(e) => e.stopPropagation()}
-              >
-                <ExternalLink size={16} />
-                Posjeti stranicu
-              </a>
-            )}
+      <GlareHover
+        width="100%"
+        height="100%"
+        background="rgba(255, 255, 255, 0.06)"
+        borderRadius="16px"
+        borderColor="rgba(255, 255, 255, 0.1)"
+        glareColor="#ffffff"
+        glareOpacity={0.3}
+        glareAngle={-30}
+        glareSize={300}
+        transitionDuration={800}
+        playOnce={false}
+      >
+        <div className="bounce-card-inner">
+          {project.image_url && (
+            <div className="project-image">
+              <img src={project.image_url} alt={project.title} />
+            </div>
+          )}
+          <div className="project-content">
+            <h3 className="project-title">{project.title}</h3>
+            <p className="project-description">{project.description}</p>
+            
+            <div className="project-technologies">
+              {project.technologies?.map((tech, i) => (
+                <span key={i} className="tech-tag">{tech}</span>
+              ))}
+            </div>
+            
+            <div className="project-meta">
+              <span className="project-time">⏱️ {project.development_time}</span>
+              {project.website_url && (
+                <a
+                  href={project.website_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="project-link"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <ExternalLink size={16} />
+                  Posjeti stranicu
+                </a>
+              )}
+            </div>
           </div>
         </div>
-      </div>
+      </GlareHover>
     </motion.div>
   )
 }

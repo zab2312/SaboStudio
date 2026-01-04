@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { Target, MessageSquare, Zap, Users } from 'lucide-react'
 import Section from './Section'
+import GlareHover from './GlareHover'
 import './TrustSignals.css'
 
 export default function TrustSignals() {
@@ -47,18 +48,31 @@ export default function TrustSignals() {
           return (
             <motion.div
               key={index}
-              className="trust-reason-card"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
-              whileHover={{ scale: 1.05, y: -5 }}
             >
-              <div className="trust-reason-icon">
-                <Icon size={28} />
-              </div>
-              <h3 className="trust-reason-title">{reason.title}</h3>
-              <p className="trust-reason-description">{reason.description}</p>
+              <GlareHover
+                width="100%"
+                height="100%"
+                background="rgba(255, 255, 255, 0.06)"
+                borderRadius="16px"
+                borderColor="rgba(255, 255, 255, 0.1)"
+                glareColor="#ffffff"
+                glareOpacity={0.3}
+                glareAngle={-30}
+                glareSize={300}
+                transitionDuration={800}
+                playOnce={false}
+                className="trust-reason-card"
+              >
+                <div className="trust-reason-icon">
+                  <Icon size={28} />
+                </div>
+                <h3 className="trust-reason-title">{reason.title}</h3>
+                <p className="trust-reason-description">{reason.description}</p>
+              </GlareHover>
             </motion.div>
           )
         })}

@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { Quote } from 'lucide-react'
 import { supabase } from '../lib/supabase'
 import Section from './Section'
+import GlareHover from './GlareHover'
 import './Testimonials.css'
 
 export default function Testimonials() {
@@ -51,39 +52,67 @@ export default function Testimonials() {
             testimonials.map((testimonial, index) => (
               <motion.div
                 key={testimonial.id}
-                className="testimonial-card"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 whileHover={{ scale: 1.05, y: -5 }}
               >
-                <Quote size={32} className="quote-icon" />
-                <p className="testimonial-comment">"{testimonial.comment}"</p>
-                <div className="testimonial-author">
-                  <div className="author-avatar">
-                    {testimonial.client_name.charAt(0).toUpperCase()}
+                <GlareHover
+                  width="100%"
+                  height="100%"
+                  background="rgba(255, 255, 255, 0.06)"
+                  borderRadius="16px"
+                  borderColor="rgba(255, 255, 255, 0.1)"
+                  glareColor="#ffffff"
+                  glareOpacity={0.3}
+                  glareAngle={-30}
+                  glareSize={300}
+                  transitionDuration={800}
+                  playOnce={false}
+                  className="testimonial-card"
+                >
+                  <Quote size={32} className="quote-icon" />
+                  <p className="testimonial-comment">"{testimonial.comment}"</p>
+                  <div className="testimonial-author">
+                    <div className="author-avatar">
+                      {testimonial.client_name.charAt(0).toUpperCase()}
+                    </div>
+                    <span className="author-name">{testimonial.client_name}</span>
                   </div>
-                  <span className="author-name">{testimonial.client_name}</span>
-                </div>
+                </GlareHover>
               </motion.div>
             ))
           ) : (
             <>
               <motion.div
-                className="testimonial-card"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.1 }}
                 whileHover={{ scale: 1.05, y: -5 }}
               >
-                <Quote size={32} className="quote-icon" />
-                <p className="testimonial-comment">"Profesionalan pristup od početka do kraja. Naša nova web stranica je donijela značajno više upita u prva 3 mjeseca."</p>
-                <div className="testimonial-author">
-                  <div className="author-avatar">M</div>
-                  <span className="author-name">Marko P., OPG (primjer)</span>
-                </div>
+                <GlareHover
+                  width="100%"
+                  height="100%"
+                  background="rgba(255, 255, 255, 0.06)"
+                  borderRadius="16px"
+                  borderColor="rgba(255, 255, 255, 0.1)"
+                  glareColor="#ffffff"
+                  glareOpacity={0.3}
+                  glareAngle={-30}
+                  glareSize={300}
+                  transitionDuration={800}
+                  playOnce={false}
+                  className="testimonial-card"
+                >
+                  <Quote size={32} className="quote-icon" />
+                  <p className="testimonial-comment">"Profesionalan pristup od početka do kraja. Naša nova web stranica je donijela značajno više upita u prva 3 mjeseca."</p>
+                  <div className="testimonial-author">
+                    <div className="author-avatar">M</div>
+                    <span className="author-name">Marko P., OPG (primjer)</span>
+                  </div>
+                </GlareHover>
               </motion.div>
               <motion.div
                 className="testimonial-card"
@@ -93,12 +122,27 @@ export default function Testimonials() {
                 transition={{ duration: 0.6, delay: 0.2 }}
                 whileHover={{ scale: 1.05, y: -5 }}
               >
-                <Quote size={32} className="quote-icon" />
-                <p className="testimonial-comment">"Konačno imamo web stranicu koja zaista funkcionira i donosi rezultate. Online rezervacije su se povećale za preko 100%."</p>
-                <div className="testimonial-author">
-                  <div className="author-avatar">A</div>
-                  <span className="author-name">Ana K., Frizerski salon (primjer)</span>
-                </div>
+                <GlareHover
+                  width="100%"
+                  height="100%"
+                  background="rgba(255, 255, 255, 0.06)"
+                  borderRadius="16px"
+                  borderColor="rgba(255, 255, 255, 0.1)"
+                  glareColor="#ffffff"
+                  glareOpacity={0.3}
+                  glareAngle={-30}
+                  glareSize={300}
+                  transitionDuration={800}
+                  playOnce={false}
+                  className="testimonial-card"
+                >
+                  <Quote size={32} className="quote-icon" />
+                  <p className="testimonial-comment">"Konačno imamo web stranicu koja zaista funkcionira i donosi rezultate. Online rezervacije su se povećale za preko 100%."</p>
+                  <div className="testimonial-author">
+                    <div className="author-avatar">A</div>
+                    <span className="author-name">Ana K., Frizerski salon (primjer)</span>
+                  </div>
+                </GlareHover>
               </motion.div>
             </>
           )}

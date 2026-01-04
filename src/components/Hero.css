@@ -96,20 +96,17 @@
 }
 
 .benefit-bullet {
-  display: flex;
+  display: flex !important;
   align-items: center;
   gap: 12px;
   padding: 16px 20px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
+  background: transparent;
   text-align: left;
   transition: all 0.3s ease;
 }
 
 .benefit-bullet:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 40px rgba(220, 38, 38, 0.3), 0 0 60px rgba(220, 38, 38, 0.15);
 }
 
 .benefit-icon {

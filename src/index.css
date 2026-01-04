@@ -4,6 +4,10 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -13,6 +17,16 @@ body {
   background: #0a0a0a;
   color: #ffffff;
   overflow-x: hidden;
+}
+
+/* Sakrij scroll bar ali zadrži funkcionalnost scrollanja */
+* {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE i Edge */
+}
+
+*::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
 }
 
 #root {
