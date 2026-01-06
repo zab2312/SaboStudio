@@ -6,14 +6,35 @@ import './Navbar.css'
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [isVisible, setIsVisible] = useState(true)
+  const [lastScrollY, setLastScrollY] = useState(0)
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50)
+      const currentScrollY = window.scrollY
+      
+      setScrolled(currentScrollY > 50)
+      
+      // Ako skrolamo dolje i prošli smo prag od 100px, sakrij navigaciju
+      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        setIsVisible(false)
+      } 
+      // Ako skrolamo gore, prikaži navigaciju
+      else if (currentScrollY < lastScrollY) {
+        setIsVisible(true)
+      }
+      
+      // Ako smo na vrhu stranice, uvijek prikaži navigaciju
+      if (currentScrollY < 10) {
+        setIsVisible(true)
+      }
+      
+      setLastScrollY(currentScrollY)
     }
-    window.addEventListener('scroll', handleScroll)
+    
+    window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+  }, [lastScrollY])
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen)
@@ -44,7 +65,7 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
+      <nav className={`navbar ${scrolled ? 'scrolled' : ''} ${!isVisible ? 'navbar-hidden' : ''}`}>
         <div className="navbar-container">
           <div className="navbar-brand">
             <a href="/" onClick={closeMenu}>sabo studio</a>
