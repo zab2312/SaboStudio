@@ -230,13 +230,13 @@
   background: rgba(20, 20, 20, 0.95);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 16px;
-  padding: 32px;
-  max-width: 600px;
+  padding: 40px;
+  max-width: 95vw;
   width: 100%;
-  max-height: 90vh;
+  max-height: 95vh;
   overflow-y: auto;
   position: relative;
-  margin-top: 30vh;
+  margin-top: 0;
 }
 
 .modal-close {
