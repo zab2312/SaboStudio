@@ -1,118 +1,253 @@
 .process-section {
-  padding: 80px 20px;
+  padding: 100px 20px;
+  background: transparent;
+  color: #1a1a1a;
 }
 
-.process-steps {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0;
-  margin-top: 48px;
+.process-section .section-card {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+.process-header {
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+.process-title {
+  font-size: 42px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 10px;
+  line-height: 1.2;
+}
+
+.process-subtitle {
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.8);
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.process-timeline-container {
   position: relative;
-  max-width: 900px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.process-step-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   width: 100%;
-  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 100px 40px;
+  min-height: 400px;
 }
 
-.process-step-wrapper {
+.process-svg {
+  width: 100%;
+  height: 500px;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+.process-path {
+  filter: drop-shadow(0 2px 4px rgba(220, 38, 38, 0.2));
+}
+
+.process-steps-wrapper {
   position: relative;
   width: 100%;
-}
-
-.process-arrow {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 40px 0;
-  color: #dc2626;
-  animation: pulse 2s ease-in-out infinite;
-}
-
-.process-arrow svg {
-  width: 24px;
-  height: 80px;
-}
-
-@keyframes pulse {
-  0%, 100% {
-    opacity: 0.4;
-    transform: translateY(0);
-  }
-  50% {
-    opacity: 0.8;
-    transform: translateY(5px);
-  }
+  height: 100%;
+  min-height: 400px;
+  z-index: 2;
 }
 
 .process-step {
-  padding: 24px 48px;
-  background: transparent;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transform: translate(-50%, -50%);
+}
+
+/* Circle elementi su sada u SVG-u, ne treba HTML circle */
+
+.process-step-content {
+  position: absolute;
+  width: 280px;
   text-align: center;
-  position: relative;
   transition: all 0.3s ease;
 }
 
-.process-step:hover {
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 40px rgba(220, 38, 38, 0.4), 0 0 60px rgba(220, 38, 38, 0.2);
+.process-step-1 .process-step-content {
+  bottom: 80px;
+}
+
+.process-step-2 .process-step-content {
+  top: 90px;
+}
+
+.process-step-3 .process-step-content {
+  bottom: 90px;
+}
+
+.process-step-4 .process-step-content {
+  top: 110px;
 }
 
 .process-step-number {
-  position: absolute;
-  top: -20px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 40px;
-  height: 40px;
+  display: inline-block;
+  width: 32px;
+  height: 32px;
   background: #dc2626;
+  color: #ffffff;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 20px;
+  font-size: 14px;
   font-weight: 700;
-  color: white;
-  z-index: 10;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  margin: 0 auto 12px;
+  box-shadow: 0 2px 8px rgba(220, 38, 38, 0.3);
 }
 
-.process-step-icon {
-  display: inline-flex;
-  padding: 12px;
-  background: rgba(220, 38, 38, 0.2);
-  border-radius: 12px;
-  margin: 20px 0 12px;
-  color: #dc2626;
+.process-step:hover .process-step-number {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.4);
 }
 
 .process-step-title {
-  font-size: 20px;
-  font-weight: 600;
-  margin-bottom: 12px;
+  font-size: 18px;
+  font-weight: 700;
   color: #ffffff;
+  margin-bottom: 8px;
+  line-height: 1.3;
 }
 
 .process-step-description {
   font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
   line-height: 1.6;
-  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+}
+
+.process-step:hover .process-step-title {
+  color: #dc2626;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .process-timeline-container {
+    padding: 100px 20px;
+  }
+
+  .process-step-content {
+    width: 240px;
+  }
 }
 
 @media (max-width: 768px) {
-  .process-steps {
-    max-width: 100%;
-    padding: 0 20px;
+  .process-section {
+    padding: 60px 16px;
   }
-  
+
+  .process-title {
+    font-size: 32px;
+  }
+
+  .process-subtitle {
+    font-size: 16px;
+  }
+
+  .process-header {
+    margin-bottom: 60px;
+  }
+
+  .process-timeline-container {
+    padding: 80px 10px;
+    min-height: 600px;
+  }
+
+  .process-svg {
+    height: 450px;
+    top: 50%;
+  }
+
+  .process-steps-wrapper {
+    min-height: 600px;
+  }
+
   .process-step {
-    padding: 32px 24px;
+    position: relative;
+    left: 50% !important;
+    top: auto !important;
+    transform: translateX(-50%);
+    margin-bottom: 60px;
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .process-step:nth-child(1),
+  .process-step:nth-child(2),
+  .process-step:nth-child(3),
+  .process-step:nth-child(4) {
+    top: auto !important;
+    bottom: auto !important;
+  }
+
+  .process-step-content {
+    position: relative;
+    width: 100%;
+    top: auto !important;
+    bottom: auto !important;
+  }
+
+  .process-step-content.top,
+  .process-step-content.bottom {
+    position: relative;
+    margin-top: 20px;
+  }
+
+  .process-step-circle {
+    order: -1;
+    margin-bottom: 20px;
+  }
+
+  .process-svg {
+    display: none;
+  }
+
+  /* Vertikalna linija za mobile */
+  .process-steps-wrapper::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(to bottom, #dc2626, #dc2626);
+    transform: translateX(-50%);
+    z-index: 1;
   }
 }
 
+@media (max-width: 480px) {
+  .process-title {
+    font-size: 28px;
+  }
+
+  .process-step-content {
+    width: 100%;
+    padding: 0 10px;
+  }
+
+  .process-step-title {
+    font-size: 16px;
+  }
+
+  .process-step-description {
+    font-size: 13px;
+  }
+}
