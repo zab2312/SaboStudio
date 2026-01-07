@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Plus, Edit, Trash2, Calendar, Clock, X, Mail, FileSearch } from 'lucide-react'
+import ReactQuill from 'react-quill'
+import 'react-quill/dist/quill.snow.css'
 import { supabase } from '../lib/supabase'
 import AdminLayout from '../components/AdminLayout'
 import Section from '../components/Section'
@@ -27,6 +29,8 @@ export default function Admin() {
   const [projectForm, setProjectForm] = useState({
     title: '',
     description: '',
+    short_description: '',
+    full_description: '',
     technologies: '',
     development_time: '',
     website_url: '',
@@ -175,6 +179,8 @@ export default function Admin() {
         setProjectForm({
           title: '',
           description: '',
+          short_description: '',
+          full_description: '',
           technologies: '',
           development_time: '',
           website_url: '',
@@ -193,6 +199,8 @@ export default function Admin() {
         setProjectForm({
           title: '',
           description: '',
+          short_description: '',
+          full_description: '',
           technologies: '',
           development_time: '',
           website_url: '',
@@ -221,6 +229,8 @@ export default function Admin() {
     setProjectForm({
       title: project.title,
       description: project.description,
+      short_description: project.short_description || '',
+      full_description: project.full_description || '',
       technologies: project.technologies?.join(', ') || '',
       development_time: project.development_time,
       website_url: project.website_url || '',
@@ -449,6 +459,8 @@ export default function Admin() {
                 setProjectForm({
                   title: '',
                   description: '',
+                  short_description: '',
+                  full_description: '',
                   technologies: '',
                   development_time: '',
                   website_url: '',
@@ -725,13 +737,51 @@ export default function Admin() {
                   />
                 </div>
                 <div className="form-group">
-                  <label>Opis</label>
+                  <label>Opis (legacy - zadržano za kompatibilnost)</label>
                   <textarea
                     value={projectForm.description}
                     onChange={(e) => setProjectForm({ ...projectForm, description: e.target.value })}
+                    rows={3}
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Kratki opis *</label>
+                  <p className="form-hint">Ovaj opis se prikazuje na početnoj stranici u karticama projekata</p>
+                  <textarea
+                    value={projectForm.short_description}
+                    onChange={(e) => setProjectForm({ ...projectForm, short_description: e.target.value })}
                     required
                     rows={4}
+                    placeholder="Kratak opis projekta koji se prikazuje na početnoj stranici..."
                   />
+                </div>
+                <div className="form-group">
+                  <label>Cijeli opis projekta *</label>
+                  <p className="form-hint">Detaljni opis koji se prikazuje na stranici detalja projekta. Možeš koristiti bold, italic, linkove, slike itd.</p>
+                  <div className="quill-wrapper">
+                    <ReactQuill
+                      theme="snow"
+                      value={projectForm.full_description}
+                      onChange={(value) => setProjectForm({ ...projectForm, full_description: value })}
+                      modules={{
+                        toolbar: [
+                          [{ 'header': [1, 2, 3, false] }],
+                          ['bold', 'italic', 'underline', 'strike'],
+                          [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                          [{ 'color': [] }, { 'background': [] }],
+                          ['link', 'image'],
+                          ['clean']
+                        ]
+                      }}
+                      formats={[
+                        'header',
+                        'bold', 'italic', 'underline', 'strike',
+                        'list', 'bullet',
+                        'color', 'background',
+                        'link', 'image'
+                      ]}
+                    />
+                  </div>
                 </div>
                 <div className="form-group">
                   <label>Tehnologije (odvojene zarezom)</label>

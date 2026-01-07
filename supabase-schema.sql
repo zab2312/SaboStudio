@@ -3,6 +3,8 @@ CREATE TABLE IF NOT EXISTS projects (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   title VARCHAR(255) NOT NULL,
   description TEXT NOT NULL,
+  short_description TEXT, -- Kratki opis koji se prikazuje na početnoj stranici
+  full_description TEXT, -- Cijeli opis s HTML formatiranjem koji se prikazuje na detail stranici
   technologies TEXT[] NOT NULL,
   development_time VARCHAR(100) NOT NULL,
   website_url VARCHAR(500),
@@ -10,6 +12,11 @@ CREATE TABLE IF NOT EXISTS projects (
   created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc', NOW()) NOT NULL,
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc', NOW()) NOT NULL
 );
+
+-- Add new columns to existing projects table (if table already exists)
+ALTER TABLE projects 
+  ADD COLUMN IF NOT EXISTS short_description TEXT,
+  ADD COLUMN IF NOT EXISTS full_description TEXT;
 
 -- Client testimonials table
 CREATE TABLE IF NOT EXISTS testimonials (

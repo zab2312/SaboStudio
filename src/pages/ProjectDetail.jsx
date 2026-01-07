@@ -113,7 +113,14 @@ export default function ProjectDetail() {
 
           <div className="project-detail-description">
             <h2>Opis projekta</h2>
-            <p>{project.description}</p>
+            {project.full_description ? (
+              <div 
+                className="project-full-description"
+                dangerouslySetInnerHTML={{ __html: project.full_description }}
+              />
+            ) : (
+              <p>{project.description || project.short_description}</p>
+            )}
           </div>
 
           {project.technologies && project.technologies.length > 0 && (

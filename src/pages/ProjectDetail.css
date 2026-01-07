@@ -106,6 +106,89 @@
   color: rgba(255, 255, 255, 0.8);
 }
 
+.project-full-description {
+  font-size: 18px;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.project-full-description h1,
+.project-full-description h2,
+.project-full-description h3,
+.project-full-description h4 {
+  color: #ffffff;
+  margin-top: 24px;
+  margin-bottom: 16px;
+  font-weight: 700;
+}
+
+.project-full-description h1 {
+  font-size: 32px;
+}
+
+.project-full-description h2 {
+  font-size: 28px;
+}
+
+.project-full-description h3 {
+  font-size: 24px;
+}
+
+.project-full-description h4 {
+  font-size: 20px;
+}
+
+.project-full-description p {
+  margin-bottom: 16px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.project-full-description strong {
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.project-full-description em {
+  font-style: italic;
+}
+
+.project-full-description ul,
+.project-full-description ol {
+  margin: 16px 0;
+  padding-left: 32px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.project-full-description li {
+  margin-bottom: 8px;
+}
+
+.project-full-description a {
+  color: #dc2626;
+  text-decoration: underline;
+  transition: color 0.3s ease;
+}
+
+.project-full-description a:hover {
+  color: #b91c1c;
+}
+
+.project-full-description img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 24px 0;
+  display: block;
+}
+
+.project-full-description blockquote {
+  border-left: 4px solid #dc2626;
+  padding-left: 20px;
+  margin: 20px 0;
+  color: rgba(255, 255, 255, 0.7);
+  font-style: italic;
+}
+
 .technologies-list {
   display: flex;
   flex-wrap: wrap;
