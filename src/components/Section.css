@@ -1,17 +1,17 @@
 .section {
   width: 100%;
-  padding: 80px 20px;
+  padding: var(--section-padding-y) var(--section-padding-x);
   display: flex;
   justify-content: center;
 }
 
 .section-card {
   width: 100%;
-  max-width: 1200px;
+  max-width: var(--section-content-max-width);
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(10px);
   border-radius: 24px;
-  padding: 60px 40px;
+  padding: clamp(32px, 3.6vw, 42px) clamp(19px, 2.4vw, 29px); /* Reduced by ~20% for denser feel */
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   position: relative;
@@ -19,11 +19,11 @@
 
 @media (max-width: 768px) {
   .section {
-    padding: 40px 16px;
+    padding: clamp(32px, 4vw, 40px) var(--space-md);
   }
   
   .section-card {
-    padding: 40px 24px;
+    padding: clamp(32px, 3.5vw, 40px) var(--space-lg);
     border-radius: 16px;
   }
 }

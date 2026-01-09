@@ -142,6 +142,25 @@
   color: #dc2626;
 }
 
+.appointment-package {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 8px;
+  padding: 6px 12px;
+  background: rgba(220, 38, 38, 0.15);
+  border: 1px solid rgba(220, 38, 38, 0.3);
+  border-radius: 6px;
+  width: fit-content;
+}
+
+.appointment-package svg {
+  color: #dc2626;
+  flex-shrink: 0;
+}
+
 .appointment-status {
   display: inline-block;
   padding: 4px 12px;

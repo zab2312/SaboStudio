@@ -1,22 +1,160 @@
 .projects-section {
-  padding: 80px 20px;
+  padding: var(--section-padding-y) var(--section-padding-x);
 }
 
-.projects-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  gap: 32px;
-  margin-top: 48px;
-  perspective: 1000px;
+/* Carousel wrapper */
+.projects-carousel-wrapper {
+  position: relative;
+  margin-top: var(--space-xl);
+  width: 100%;
+  padding: 0 var(--space-lg);
 }
 
+@media (max-width: 768px) {
+  .projects-carousel-wrapper {
+    padding: 0;
+  }
+}
+
+.projects-carousel {
+  overflow: hidden;
+  width: 100%;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+.projects-carousel:active {
+  cursor: grabbing;
+}
+
+/* Prevent text selection during drag */
+.projects-carousel * {
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-drag: none;
+}
+
+.projects-carousel-container {
+  display: flex;
+  touch-action: pan-y pinch-zoom;
+  margin-left: calc(var(--space-lg) * -1);
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.projects-carousel-slide {
+  flex: 0 0 auto;
+  min-width: 0;
+  padding-left: var(--space-lg);
+  width: 100%;
+}
+
+/* Desktop: 2 cards visible */
+@media (min-width: 1024px) {
+  .projects-carousel-slide {
+    width: calc(50% - var(--space-lg) / 2);
+  }
+}
+
+/* Tablet: 1.5 cards visible (optional) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .projects-carousel-slide {
+    width: calc(66.666% - var(--space-lg) * 0.666);
+  }
+}
+
+/* Mobile: 1 card visible */
+@media (max-width: 767px) {
+  .projects-carousel-slide {
+    width: calc(100% - var(--space-lg));
+  }
+}
+
+/* Arrow buttons */
+.projects-carousel-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  background: rgba(10, 10, 10, 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+.projects-carousel-button:hover:not(:disabled) {
+  background: rgba(220, 38, 38, 0.2);
+  border-color: rgba(220, 38, 38, 0.4);
+  color: #dc2626;
+  transform: translateY(-50%) scale(1.1);
+}
+
+.projects-carousel-button:active:not(:disabled) {
+  transform: translateY(-50%) scale(0.95);
+}
+
+.projects-carousel-button:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* In infinite loop mode, buttons are always enabled, but we can add visual feedback */
+.projects-carousel-button:focus-visible {
+  outline: 2px solid rgba(220, 38, 38, 0.5);
+  outline-offset: 2px;
+}
+
+.projects-carousel-button--prev {
+  left: -24px;
+}
+
+.projects-carousel-button--next {
+  right: -24px;
+}
+
+/* Adjust button position on mobile */
+@media (max-width: 768px) {
+  .projects-carousel-button--prev {
+    left: 4px;
+  }
+  
+  .projects-carousel-button--next {
+    right: 4px;
+  }
+  
+  .projects-carousel-button {
+    width: 40px;
+    height: 40px;
+    background: rgba(10, 10, 10, 0.9);
+  }
+}
+
+/* Card styles (reused from original) */
 .bounce-card {
   cursor: pointer;
   transform-style: preserve-3d;
+  height: 100%;
 }
 
 .bounce-card-inner {
-  padding: 32px;
+  padding: var(--card-padding);
   background: transparent;
   transition: all 0.3s ease;
   height: 100%;
@@ -30,10 +168,10 @@
 
 .project-image {
   width: 100%;
-  height: 200px;
+  height: clamp(180px, 18vw, 200px);
   border-radius: 12px;
   overflow: hidden;
-  margin-bottom: 20px;
+  margin-bottom: var(--space-md);
   background: rgba(255, 255, 255, 0.05);
 }
 
@@ -50,17 +188,17 @@
 }
 
 .project-title {
-  font-size: 24px;
+  font-size: var(--font-size-h3);
   font-weight: 700;
-  margin-bottom: 12px;
+  margin-bottom: var(--space-sm);
   color: #ffffff;
 }
 
 .project-description {
-  font-size: 14px;
-  line-height: 1.6;
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-relaxed);
   color: rgba(255, 255, 255, 0.7);
-  margin-bottom: 16px;
+  margin-bottom: var(--space-md);
   flex: 1;
 }
 
@@ -112,14 +250,16 @@
 .projects-loading,
 .projects-empty {
   text-align: center;
-  padding: 48px;
+  padding: var(--space-xl);
   color: rgba(255, 255, 255, 0.6);
-  font-size: 18px;
+  font-size: var(--font-size-body);
 }
 
-@media (max-width: 768px) {
-  .projects-grid {
-    grid-template-columns: 1fr;
-  }
+/* Ensure cards maintain consistent height */
+.projects-carousel-slide .bounce-card {
+  height: 100%;
 }
 
+.projects-carousel-slide .bounce-card-inner {
+  min-height: 100%;
+}

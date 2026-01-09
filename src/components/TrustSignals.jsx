@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import { Target, MessageSquare, Zap, Users } from 'lucide-react'
 import Section from './Section'
 import GlareHover from './GlareHover'
+import CountUp from './CountUp'
 import './TrustSignals.css'
 
 export default function TrustSignals() {
@@ -9,21 +10,25 @@ export default function TrustSignals() {
     {
       icon: Target,
       title: 'Fokus na konverzije (CRO)',
+      supportingSentence: 'Svaki dizajn je testiran i optimiziran za maksimalne rezultate.',
       description: 'Ne samo lijepo, već funkcionalno – dizajniramo za rezultate.'
     },
     {
       icon: MessageSquare,
       title: 'Jasna komunikacija i realni rokovi',
+      supportingSentence: 'Bez iznenađenja, bez odlaganja – sve je unaprijed dogovoreno.',
       description: 'Transparentnost i odgovornost u svakom koraku projekta.'
     },
     {
       icon: Zap,
       title: 'Brza i mobilno optimizirana izrada',
+      supportingSentence: 'Odlično iskustvo na svakom uređaju, u svako vrijeme.',
       description: 'Stranice koje se učitavaju brzo i savršeno rade na svim uređajima.'
     },
     {
       icon: Users,
       title: 'Individualni pristup (ne radimo masovno)',
+      supportingSentence: 'Vaš projekt je prioritet, ne samo još jedan zadatak na listi.',
       description: 'Svaki projekt je jedinstven i dobiva pažnju koju zaslužuje.'
     }
   ]
@@ -45,9 +50,11 @@ export default function TrustSignals() {
       <div className="trust-reasons-grid">
         {reasons.map((reason, index) => {
           const Icon = reason.icon
+          const isWideCard = index === 3 // 4th card (0-indexed)
           return (
             <motion.div
               key={index}
+              className={isWideCard ? 'trust-reason-item trust-reason-item-wide' : 'trust-reason-item'}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -55,7 +62,7 @@ export default function TrustSignals() {
             >
               <GlareHover
                 width="100%"
-                height="100%"
+                height="auto"
                 background="rgba(255, 255, 255, 0.06)"
                 borderRadius="16px"
                 borderColor="rgba(255, 255, 255, 0.1)"
@@ -65,13 +72,31 @@ export default function TrustSignals() {
                 glareSize={300}
                 transitionDuration={800}
                 playOnce={false}
-                className="trust-reason-card"
+                className={isWideCard ? 'trust-reason-card trust-reason-card-wide' : 'trust-reason-card'}
               >
-                <div className="trust-reason-icon">
-                  <Icon size={28} />
-                </div>
-                <h3 className="trust-reason-title">{reason.title}</h3>
-                <p className="trust-reason-description">{reason.description}</p>
+                {isWideCard ? (
+                  <div className="trust-reason-card-wide-content">
+                    <div className="trust-reason-card-wide-left">
+                      <div className="trust-reason-icon">
+                        <Icon size={28} />
+                      </div>
+                      <h3 className="trust-reason-title">{reason.title}</h3>
+                    </div>
+                    <div className="trust-reason-card-wide-right">
+                      <p className="trust-reason-description">{reason.description}</p>
+                      <p className="trust-reason-supporting">{reason.supportingSentence}</p>
+                    </div>
+                  </div>
+                ) : (
+                  <>
+                    <div className="trust-reason-icon">
+                      <Icon size={28} />
+                    </div>
+                    <h3 className="trust-reason-title">{reason.title}</h3>
+                    <p className="trust-reason-supporting">{reason.supportingSentence}</p>
+                    <p className="trust-reason-description">{reason.description}</p>
+                  </>
+                )}
               </GlareHover>
             </motion.div>
           )
@@ -79,21 +104,32 @@ export default function TrustSignals() {
       </div>
 
       <motion.div
-        className="trust-strip"
+        className="trust-stats-bar"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.6, delay: 0.4 }}
+        transition={{ duration: 0.6, delay: 0.5 }}
       >
-        <div className="trust-strip-content">
-          <span className="trust-strip-label">Radimo s lokalnim poduzećima</span>
-          <div className="trust-strip-logos">
-            <div className="trust-logo-placeholder">OPG</div>
-            <div className="trust-logo-placeholder">Saloni</div>
-            <div className="trust-logo-placeholder">Restorani</div>
-            <div className="trust-logo-placeholder">Klinike</div>
-            <div className="trust-logo-placeholder">Pravne službe</div>
-          </div>
+        <div className="trust-stats-item">
+          <span className="trust-stat-value">
+            <CountUp
+              to={12}
+              from={0}
+              duration={2}
+              delay={0.2}
+              className="count-up-number"
+            />
+            <span className="trust-stat-plus">+</span>
+          </span>
+          <span className="trust-stat-label">završenih projekata</span>
+        </div>
+        <span className="trust-stats-separator">•</span>
+        <div className="trust-stats-item">
+          <span className="trust-stat-label">Lokalni biznisi</span>
+        </div>
+        <span className="trust-stats-separator">•</span>
+        <div className="trust-stats-item">
+          <span className="trust-stat-label">Dugoročne suradnje</span>
         </div>
       </motion.div>
     </Section>

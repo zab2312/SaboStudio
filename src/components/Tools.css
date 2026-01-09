@@ -1,13 +1,13 @@
 .tools-section {
-  padding: 80px 20px;
+  padding: var(--section-padding-y) var(--section-padding-x);
 }
 
 .tools-list {
   display: flex;
   flex-direction: column;
-  gap: 24px;
-  margin-top: 48px;
-  max-width: 800px;
+  gap: var(--card-gap);
+  margin-top: var(--space-xl);
+  max-width: var(--section-text-max-width);
   margin-left: auto;
   margin-right: auto;
 }
@@ -60,13 +60,13 @@
 }
 
 .tool-name {
-  font-size: 18px;
+  font-size: var(--font-size-h4);
   font-weight: 600;
   color: #ffffff;
 }
 
 .tool-percentage {
-  font-size: 16px;
+  font-size: var(--font-size-body);
   font-weight: 600;
   color: rgba(255, 255, 255, 0.8);
 }
@@ -114,21 +114,9 @@
 }
 
 @media (max-width: 768px) {
-  .tools-section {
-    padding: 60px 20px;
-  }
-  
   .tools-list {
-    gap: 24px;
-    margin-top: 32px;
-  }
-  
-  .tool-name {
-    font-size: 16px;
-  }
-  
-  .tool-percentage {
-    font-size: 14px;
+    gap: var(--card-gap);
+    margin-top: var(--space-lg);
   }
 }
 

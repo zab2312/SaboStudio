@@ -19,7 +19,7 @@ export default function BottomCTA() {
         </p>
         <a href="#analiza" className="bottom-cta-button">
           <FileSearch size={20} />
-          Zatraži besplatnu analizu
+          Pošalji web na provjeru
         </a>
         <p className="bottom-cta-microcopy">Bez obaveze. Bez prodajnog pritiska.</p>
       </motion.div>

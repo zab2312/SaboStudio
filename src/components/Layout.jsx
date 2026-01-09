@@ -1,12 +1,12 @@
 import Aurora from './Aurora'
-import Navbar from './Navbar'
+import FloatingMenu from './FloatingMenu'
 import GradualBlur from './GradualBlur'
 import './Layout.css'
 
 export default function Layout({ children }) {
   return (
     <div className="layout">
-      <Navbar />
+      <FloatingMenu />
       <div className="aurora-background">
         <Aurora
           colorStops={["#3A29FF", "#FF94B4", "#FF3232"]}

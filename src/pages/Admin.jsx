@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { Plus, Edit, Trash2, Calendar, Clock, X, Mail, FileSearch } from 'lucide-react'
+import { Plus, Edit, Trash2, Calendar, Clock, X, Mail, FileSearch, Package } from 'lucide-react'
 import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
 import { supabase } from '../lib/supabase'
@@ -9,6 +9,12 @@ import Section from '../components/Section'
 import './Admin.css'
 
 export default function Admin() {
+  // Package mapping
+  const packageMap = {
+    start: 'START WEB',
+    upiti: 'WEB KOJI DONOSI UPITE',
+    custom: 'CUSTOM WEB'
+  }
   const [activeTab, setActiveTab] = useState('projects')
   const [projects, setProjects] = useState([])
   const [appointments, setAppointments] = useState([])
@@ -516,6 +522,12 @@ export default function Admin() {
                           <Calendar size={16} />
                           <span>{new Date(appointment.appointment_date).toLocaleString('hr-HR')}</span>
                         </div>
+                        {appointment.package_selected && (
+                          <div className="appointment-package">
+                            <Package size={16} />
+                            <span>{packageMap[appointment.package_selected] || appointment.package_selected}</span>
+                          </div>
+                        )}
                         <span className={`appointment-status ${appointment.status}`}>
                           {appointment.status}
                         </span>

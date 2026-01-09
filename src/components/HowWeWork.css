@@ -1,0 +1,103 @@
+.how-we-work-section {
+  padding: var(--section-padding-y) var(--section-padding-x);
+}
+
+.how-we-work-subsection {
+  margin-top: var(--space-2xl);
+}
+
+.how-we-work-subsection:first-of-type {
+  margin-top: var(--space-xl);
+}
+
+.subsection-title {
+  font-size: var(--font-size-h2);
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: var(--space-sm);
+  text-align: center;
+}
+
+.subsection-description {
+  font-size: var(--font-size-body);
+  color: rgba(255, 255, 255, 0.7);
+  text-align: center;
+  max-width: var(--section-text-max-width);
+  margin: 0 auto var(--space-xl);
+  line-height: var(--line-height-relaxed);
+}
+
+/* Process Steps List */
+.process-steps-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  margin-top: var(--space-xl);
+}
+
+.process-step-item {
+  display: flex;
+  gap: var(--space-lg);
+  align-items: flex-start;
+  padding: var(--space-lg);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.process-step-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.15);
+  transform: translateX(4px);
+}
+
+.process-step-number {
+  font-size: clamp(32px, 4vw, 48px);
+  font-weight: 800;
+  color: #dc2626;
+  line-height: 1;
+  flex-shrink: 0;
+  min-width: 60px;
+  text-align: center;
+}
+
+.process-step-content {
+  flex: 1;
+}
+
+.process-step-title {
+  font-size: var(--font-size-h3);
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: var(--space-sm);
+}
+
+.process-step-description {
+  font-size: var(--font-size-body);
+  color: rgba(255, 255, 255, 0.7);
+  line-height: var(--line-height-relaxed);
+}
+
+.process-subsection {
+  margin-top: var(--space-3xl);
+  padding-top: var(--space-2xl);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+@media (max-width: 768px) {
+  .process-step-item {
+    flex-direction: column;
+    gap: var(--space-md);
+    text-align: center;
+  }
+
+  .process-step-number {
+    min-width: auto;
+  }
+
+  .subsection-title {
+    font-size: var(--font-size-h3);
+  }
+}
+

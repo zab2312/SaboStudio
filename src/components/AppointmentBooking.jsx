@@ -14,9 +14,96 @@ export default function AppointmentBooking() {
   const [workingHours, setWorkingHours] = useState({})
   const [clientName, setClientName] = useState('')
   const [clientEmail, setClientEmail] = useState('')
+  const [selectedPackage, setSelectedPackage] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitSuccess, setSubmitSuccess] = useState(false)
   const [weekOffset, setWeekOffset] = useState(0)
+
+  // Package mapping
+  const packageMap = {
+    start: 'START WEB',
+    upiti: 'WEB KOJI DONOSI UPITE',
+    custom: 'CUSTOM WEB'
+  }
+
+  // Read URL params on mount and handle package selection
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search)
+    const packageParam = urlParams.get('paket')
+    
+    if (packageParam && packageMap[packageParam]) {
+      setSelectedPackage(packageParam)
+      
+      // Auto-scroll to booking section if package param exists
+      // Using reliable offsetTop method
+      const scrollToBooking = (attempt = 0) => {
+        const bookingSection = document.getElementById('rezervacija')
+        
+        if (bookingSection) {
+          // Calculate absolute position using offsetTop
+          let elementTop = 0
+          let element = bookingSection
+          while (element) {
+            elementTop += element.offsetTop
+            element = element.offsetParent
+          }
+          
+          // Offset for floating menu button (80px)
+          const offset = 80
+          const scrollPosition = elementTop - offset
+
+          // Scroll to position
+          window.scrollTo({
+            top: Math.max(0, scrollPosition),
+            behavior: 'smooth'
+          })
+        } else if (attempt < 10) {
+          // Retry if element not found yet (max 10 attempts = 1 second)
+          setTimeout(() => scrollToBooking(attempt + 1), 100)
+        }
+      }
+      
+      // Start scrolling after component is mounted
+      setTimeout(() => scrollToBooking(), 500)
+    }
+  }, [])
+
+  // Listen for package selection events
+  useEffect(() => {
+    const handlePackageSelected = (event) => {
+      const packageKey = event.detail?.packageKey
+      if (packageKey && packageMap[packageKey]) {
+        setSelectedPackage(packageKey)
+        
+        // Scroll to booking section when package is selected
+        // Using same method as Navbar: getBoundingClientRect + pageYOffset
+        const scrollToBooking = (attempt = 0) => {
+          const bookingSection = document.getElementById('rezervacija')
+          
+          if (bookingSection) {
+            // Use same method as Navbar: getBoundingClientRect + pageYOffset
+            const offset = 80 // Offset for floating menu button
+            const elementPosition = bookingSection.getBoundingClientRect().top
+            const offsetPosition = elementPosition + window.pageYOffset - offset
+
+            window.scrollTo({
+              top: Math.max(0, offsetPosition),
+              behavior: 'smooth'
+            })
+          } else if (attempt < 15) {
+            // Retry if element not found yet (max 15 attempts = 1.5 seconds)
+            setTimeout(() => scrollToBooking(attempt + 1), 100)
+          }
+        }
+        
+        // Start scrolling immediately, with retry logic
+        scrollToBooking()
+      }
+    }
+
+    window.addEventListener('packageSelected', handlePackageSelected)
+    return () => window.removeEventListener('packageSelected', handlePackageSelected)
+  }, [])
 
   const currentDate = new Date()
   const baseWeekStart = startOfWeek(currentDate, { weekStartsOn: 1 })
@@ -128,14 +215,23 @@ export default function AppointmentBooking() {
     const [hours, minutes] = selectedTime.split(':')
     appointmentDateTime.setHours(parseInt(hours), parseInt(minutes), 0, 0)
 
+    const appointmentData = {
+      client_name: clientName,
+      client_email: clientEmail,
+      appointment_date: appointmentDateTime.toISOString(),
+      status: 'pending'
+    }
+    
+    // Add package if selected
+    // Note: Requires adding 'package_selected VARCHAR(50)' column to appointments table
+    // ALTER TABLE appointments ADD COLUMN IF NOT EXISTS package_selected VARCHAR(50);
+    if (selectedPackage) {
+      appointmentData.package_selected = selectedPackage
+    }
+
     const { error } = await supabase
       .from('appointments')
-      .insert({
-        client_name: clientName,
-        client_email: clientEmail,
-        appointment_date: appointmentDateTime.toISOString(),
-        status: 'pending'
-      })
+      .insert(appointmentData)
 
     setIsSubmitting(false)
     
@@ -147,8 +243,14 @@ export default function AppointmentBooking() {
       setClientEmail('')
       setSelectedDate(null)
       setSelectedTime(null)
+      // Keep selectedPackage in state (don't reset it)
       setTimeout(() => setSubmitSuccess(false), 5000)
       loadBookedAppointments()
+      
+      // Clear package from URL after successful submission
+      const url = new URL(window.location)
+      url.searchParams.delete('paket')
+      window.history.replaceState({}, '', url)
     }
   }
 
@@ -249,6 +351,43 @@ export default function AppointmentBooking() {
 
         <form className="appointment-form" onSubmit={handleSubmit}>
           <h3 className="form-title">Vaši podaci</h3>
+          
+          {selectedPackage && (
+            <motion.div
+              className="package-confirmation"
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+            >
+              <p className="package-confirmation-text">
+                Odabrali ste: <strong>{packageMap[selectedPackage]}</strong>
+              </p>
+            </motion.div>
+          )}
+
+          <div className="form-group">
+            <label htmlFor="packageSelect">Paket</label>
+            <select
+              id="packageSelect"
+              value={selectedPackage}
+              onChange={(e) => {
+                setSelectedPackage(e.target.value)
+                // Update URL param
+                const url = new URL(window.location)
+                if (e.target.value) {
+                  url.searchParams.set('paket', e.target.value)
+                } else {
+                  url.searchParams.delete('paket')
+                }
+                window.history.pushState({}, '', url)
+              }}
+              className="form-select"
+            >
+              <option value="">Odaberite paket (opcionalno)</option>
+              <option value="start">START WEB</option>
+              <option value="upiti">WEB KOJI DONOSI UPITE</option>
+              <option value="custom">CUSTOM WEB</option>
+            </select>
+          </div>
           
           <div className="form-group">
             <label htmlFor="clientName">Ime i prezime</label>

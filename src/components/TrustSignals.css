@@ -1,22 +1,135 @@
 .trust-signals-section {
-  padding: 80px 20px;
+  padding: var(--section-padding-y) var(--section-padding-x);
+}
+
+.section-title {
+  font-size: var(--font-size-h2);
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: var(--space-lg);
+  color: #ffffff;
+}
+
+.section-description {
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-loose);
+  text-align: center;
+  color: rgba(255, 255, 255, 0.8);
+  max-width: var(--section-text-max-width);
+  margin: 0 auto var(--space-xl);
 }
 
 .trust-reasons-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 24px;
-  margin-top: 48px;
+  grid-template-columns: 1fr;
+  gap: var(--card-gap);
+  margin-top: var(--space-xl);
+  align-items: start;
+}
+
+.trust-reason-item {
+  width: 100%;
+}
+
+/* Responsive grid: 2 columns on md, 3 columns on lg+ */
+@media (min-width: 768px) {
+  .trust-reasons-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .trust-reasons-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  /* 4th card spans full width on lg+ */
+  .trust-reason-item-wide {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Additional fine-tuning for 1440px+ screens */
+@media (min-width: 1440px) {
+  .trust-reason-card-wide-content {
+    gap: clamp(40px, 3.5vw, 56px);
+  }
+  
+  .trust-reason-card-wide-left {
+    gap: clamp(24px, 2.2vw, 32px);
+  }
 }
 
 .trust-reason-card {
-  padding: 32px;
+  padding: var(--card-padding);
   background: transparent;
   text-align: center;
   transition: all 0.3s ease;
   display: flex !important;
   flex-direction: column;
   align-items: center;
+  min-height: auto;
+  height: auto;
+}
+
+/* Wide card layout: horizontal with icon+title on left, description on right */
+.trust-reason-card-wide {
+  text-align: left !important;
+  align-items: stretch !important;
+  padding: clamp(24px, 2.8vw, 32px) clamp(28px, 3.2vw, 36px) !important; /* Slightly more padding for balance */
+}
+
+.trust-reason-card-wide-content {
+  display: flex;
+  align-items: center;
+  gap: clamp(32px, 3.5vw, 48px); /* Increased gap for better balance on wide screens */
+  width: 100%;
+}
+
+.trust-reason-card-wide-left {
+  display: flex;
+  align-items: center;
+  gap: clamp(20px, 2.2vw, 28px);
+  flex-shrink: 0;
+}
+
+.trust-reason-card-wide-left .trust-reason-icon {
+  margin-bottom: 0;
+  width: clamp(56px, 5.5vw, 64px);
+  height: clamp(56px, 5.5vw, 64px);
+  flex-shrink: 0;
+}
+
+.trust-reason-card-wide-left .trust-reason-title {
+  margin-bottom: 0;
+  text-align: left;
+  flex: 1;
+  min-width: 0; /* Allow wrapping if absolutely necessary */
+}
+
+.trust-reason-card-wide-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(8px, 0.9vw, 12px);
+  text-align: left;
+  justify-content: center;
+  min-width: 0; /* Allow text to shrink if needed */
+}
+
+.trust-reason-card-wide-right .trust-reason-description {
+  margin-bottom: 0;
+  font-size: var(--font-size-body-sm);
+  line-height: var(--line-height-relaxed);
+  max-width: none; /* Remove any max-width constraints */
+}
+
+.trust-reason-card-wide-right .trust-reason-supporting {
+  margin-bottom: 0;
+  font-size: var(--font-size-caption);
+  font-weight: 600;
+  opacity: 0.9;
+  line-height: var(--line-height-normal);
 }
 
 .trust-reason-card:hover {
@@ -26,83 +139,155 @@
 
 .trust-reason-icon {
   display: inline-flex;
-  padding: 16px;
-  background: rgba(220, 38, 38, 0.2);
-  border-radius: 12px;
-  margin-bottom: 20px;
+  align-items: center;
+  justify-content: center;
+  width: clamp(56px, 5.5vw, 64px);
+  height: clamp(56px, 5.5vw, 64px);
+  padding: 0;
+  background: rgba(220, 38, 38, 0.35);
+  border: 2px solid rgba(220, 38, 38, 0.5);
+  border-radius: 50%;
+  margin-bottom: var(--space-lg);
   color: #dc2626;
+  flex-shrink: 0;
 }
 
 .trust-reason-title {
-  font-size: 20px;
+  font-size: var(--font-size-h4);
   font-weight: 600;
-  margin-bottom: 12px;
+  margin-bottom: var(--space-sm);
   color: #ffffff;
 }
 
+.trust-reason-supporting {
+  font-size: var(--font-size-body-sm);
+  font-weight: 700;
+  line-height: var(--line-height-normal);
+  color: rgba(255, 255, 255, 0.95);
+  margin-bottom: var(--space-md);
+}
+
 .trust-reason-description {
-  font-size: 14px;
-  line-height: 1.6;
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-relaxed);
   color: rgba(255, 255, 255, 0.7);
 }
 
-.trust-strip {
-  margin-top: 60px;
-  padding: 32px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
-}
-
-.trust-strip-content {
+/* Compact stats bar */
+.trust-stats-bar {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 24px;
-}
-
-.trust-strip-label {
-  font-size: 18px;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.9);
-}
-
-.trust-strip-logos {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
   justify-content: center;
-  align-items: center;
+  flex-wrap: wrap;
+  gap: clamp(12px, 1.6vw, 20px);
+  margin-top: var(--space-xl);
+  padding: clamp(24px, 3vw, 32px) 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  max-width: 100%;
 }
 
-.trust-logo-placeholder {
-  padding: 12px 24px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 8px;
-  font-size: 14px;
+.trust-stats-item {
+  display: flex;
+  align-items: baseline;
+  gap: clamp(4px, 0.6vw, 6px);
+  white-space: nowrap;
+}
+
+.trust-stat-value {
+  font-size: clamp(18px, 2vw, 22px);
+  font-weight: 700;
+  color: #dc2626;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 2px;
+}
+
+.count-up-number {
+  display: inline-block;
+}
+
+.trust-stat-plus {
+  display: inline-block;
+  color: #dc2626;
+  font-weight: 700;
+}
+
+.trust-stat-label {
+  font-size: clamp(14px, 1.6vw, 16px);
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.8);
-  transition: all 0.3s ease;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.4;
+  letter-spacing: -0.01em;
 }
 
-.trust-logo-placeholder:hover {
-  background: rgba(255, 255, 255, 0.12);
-  border-color: rgba(255, 255, 255, 0.25);
+.trust-stats-separator {
+  font-size: clamp(14px, 1.6vw, 16px);
+  color: rgba(255, 255, 255, 0.25);
+  line-height: 1;
+  user-select: none;
+  padding: 0 clamp(4px, 0.5vw, 8px);
+  opacity: 0.6;
 }
 
-@media (max-width: 768px) {
-  .trust-reasons-grid {
-    grid-template-columns: 1fr;
+/* Fine-tuning for 1440px+ screens */
+@media (min-width: 1440px) {
+  .trust-stats-bar {
+    gap: clamp(20px, 2vw, 28px);
+    padding: clamp(28px, 3vw, 36px) 0;
   }
   
-  .trust-strip-logos {
-    gap: 12px;
+  .trust-stats-separator {
+    padding: 0 clamp(6px, 0.6vw, 10px);
+  }
+}
+
+@media (max-width: 767px) {
+  /* On mobile, wide card should revert to vertical layout */
+  .trust-reason-card-wide {
+    text-align: center !important;
   }
   
-  .trust-logo-placeholder {
-    padding: 10px 20px;
-    font-size: 12px;
+  .trust-reason-card-wide-content {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-lg);
+  }
+  
+  .trust-reason-card-wide-left {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-md);
+  }
+  
+  .trust-reason-card-wide-left .trust-reason-icon {
+    margin-bottom: 0;
+  }
+  
+  .trust-reason-card-wide-left .trust-reason-title {
+    text-align: center;
+  }
+  
+  .trust-reason-card-wide-right {
+    text-align: center;
+  }
+  
+  /* Stats bar on mobile: stack vertically or wrap cleanly */
+  .trust-stats-bar {
+    flex-direction: column;
+    gap: clamp(10px, 1.3vw, 14px);
+    align-items: center;
+    padding: clamp(20px, 2.5vw, 24px) 0;
+  }
+  
+  .trust-stats-item {
+    white-space: normal;
+    text-align: center;
+  }
+  
+  .trust-stats-separator {
+    display: none; /* Hide separators on mobile when stacked */
   }
 }
 

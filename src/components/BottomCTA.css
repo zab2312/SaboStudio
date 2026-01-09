@@ -1,42 +1,42 @@
 .bottom-cta-section {
-  padding: 100px 20px;
+  padding: clamp(51px, 5.6vw, 64px) var(--section-padding-x); /* Reduced by ~20% for denser feel */
 }
 
 .bottom-cta-content {
   text-align: center;
-  max-width: 700px;
+  max-width: 560px; /* Reduced from 700px for denser feel */
   margin: 0 auto;
 }
 
 .bottom-cta-title {
-  font-size: 42px;
+  font-size: clamp(32px, 3.5vw, 38px); /* Reduced from 42px, using h2 scale */
   font-weight: 700;
   color: #ffffff;
-  margin-bottom: 24px;
-  line-height: 1.2;
+  margin-bottom: var(--space-lg);
+  line-height: var(--line-height-tight);
 }
 
 .bottom-cta-text {
-  font-size: 20px;
-  line-height: 1.6;
+  font-size: var(--font-size-body-lg);
+  line-height: var(--line-height-relaxed);
   color: rgba(255, 255, 255, 0.8);
-  margin-bottom: 32px;
+  margin-bottom: var(--space-lg);
 }
 
 .bottom-cta-button {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
-  padding: 20px 40px;
+  gap: var(--space-sm);
+  padding: clamp(16px, 1.7vw, 18px) clamp(32px, 3.5vw, 36px); /* Reduced from 20px 40px */
   background: #dc2626;
   color: white;
   border-radius: 12px;
-  font-size: 20px;
+  font-size: var(--font-size-body);
   font-weight: 600;
   text-decoration: none;
   transition: all 0.3s ease;
   box-shadow: 0 4px 20px rgba(220, 38, 38, 0.4);
-  margin-bottom: 16px;
+  margin-bottom: var(--space-md);
 }
 
 .bottom-cta-button:hover {
@@ -50,23 +50,14 @@
 }
 
 .bottom-cta-microcopy {
-  font-size: 14px;
+  font-size: var(--font-size-caption);
   color: rgba(255, 255, 255, 0.6);
   font-style: italic;
 }
 
 @media (max-width: 768px) {
-  .bottom-cta-title {
-    font-size: 32px;
-  }
-  
-  .bottom-cta-text {
-    font-size: 18px;
-  }
-  
   .bottom-cta-button {
-    padding: 18px 32px;
-    font-size: 18px;
+    padding: clamp(14px, 1.5vw, 16px) clamp(28px, 3vw, 32px);
   }
 }
 

@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react'
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
+import { useState, useEffect, useCallback } from 'react'
+import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
-import { ExternalLink } from 'lucide-react'
+import { ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react'
+import useEmblaCarousel from 'embla-carousel-react'
 import { supabase } from '../lib/supabase'
 import Section from './Section'
 import GlareHover from './GlareHover'
@@ -11,45 +12,12 @@ function BounceCard({ project, index }) {
   const navigate = useNavigate()
   const [isHovered, setIsHovered] = useState(false)
   
-  const x = useMotionValue(0)
-  const y = useMotionValue(0)
-  
-  const mouseXSpring = useSpring(x)
-  const mouseYSpring = useSpring(y)
-  
-  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ['7.5deg', '-7.5deg'])
-  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ['-7.5deg', '7.5deg'])
-
-  const handleMouseMove = (e) => {
-    const rect = e.currentTarget.getBoundingClientRect()
-    const width = rect.width
-    const height = rect.height
-    const mouseX = e.clientX - rect.left
-    const mouseY = e.clientY - rect.top
-    const xPct = mouseX / width - 0.5
-    const yPct = mouseY / height - 0.5
-    x.set(xPct)
-    y.set(yPct)
-  }
-
-  const handleMouseLeave = () => {
-    x.set(0)
-    y.set(0)
-    setIsHovered(false)
-  }
-
   return (
     <motion.div
       className="bounce-card"
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
       onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
       onClick={() => project.id && !project.id.startsWith('demo') && navigate(`/project/${project.id}`)}
-      style={{
-        rotateX,
-        rotateY,
-        transformStyle: 'preserve-3d',
-      }}
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -110,6 +78,45 @@ function BounceCard({ project, index }) {
 export default function Projects() {
   const [projects, setProjects] = useState([])
   const [loading, setLoading] = useState(true)
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    {
+      loop: true,
+      align: 'start',
+      dragFree: true,
+      containScroll: 'trimSnaps',
+      skipSnaps: false,
+      duration: 25, // Animation duration for smooth transitions
+      startIndex: 0,
+      slidesToScroll: 1,
+    },
+    []
+  )
+
+  const [prevBtnEnabled, setPrevBtnEnabled] = useState(true)
+  const [nextBtnEnabled, setNextBtnEnabled] = useState(true)
+
+  const scrollPrev = useCallback(() => {
+    if (emblaApi) emblaApi.scrollPrev()
+  }, [emblaApi])
+
+  const scrollNext = useCallback(() => {
+    if (emblaApi) emblaApi.scrollNext()
+  }, [emblaApi])
+
+  const onSelect = useCallback(() => {
+    if (!emblaApi) return
+    // In infinite loop mode, buttons are always enabled
+    // But we can still check if we're at the start/end for visual feedback
+    setPrevBtnEnabled(true)
+    setNextBtnEnabled(true)
+  }, [emblaApi])
+
+  useEffect(() => {
+    if (!emblaApi) return
+    onSelect()
+    emblaApi.on('select', onSelect)
+    emblaApi.on('reInit', onSelect)
+  }, [emblaApi, onSelect])
 
   useEffect(() => {
     loadProjects()
@@ -131,6 +138,73 @@ export default function Projects() {
     }
   }
 
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (!emblaApi) return
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault()
+        scrollPrev()
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault()
+        scrollNext()
+      }
+    }
+
+    const emblaNode = emblaRef.current
+    if (emblaNode) {
+      emblaNode.addEventListener('keydown', handleKeyDown)
+      emblaNode.setAttribute('tabIndex', '0')
+      emblaNode.setAttribute('role', 'region')
+      emblaNode.setAttribute('aria-label', 'Projects carousel')
+    }
+
+    return () => {
+      if (emblaNode) {
+        emblaNode.removeEventListener('keydown', handleKeyDown)
+      }
+    }
+  }, [emblaApi, emblaRef, scrollPrev, scrollNext])
+
+  // Re-initialize on projects change
+  useEffect(() => {
+    if (emblaApi && projects.length > 0) {
+      emblaApi.reInit()
+    }
+  }, [emblaApi, projects.length])
+
+  const displayProjects = projects.length > 0 
+    ? projects 
+    : [
+        {
+          id: 'demo-1',
+          title: 'OPG - Online prodaja proizvoda',
+          description: 'Web stranica za lokalni OPG s online shopom. Povećanje online narudžbi za 150% u prva 3 mjeseca. Mobilno optimizirana stranica s jednostavnim upravljanjem zalihama.',
+          technologies: ['WordPress', 'WooCommerce', 'Responsive Design'],
+          development_time: '3-4 tjedna',
+          website_url: null,
+          image_url: null
+        },
+        {
+          id: 'demo-2',
+          title: 'Frizerski salon - Rezervacije online',
+          description: 'Moderni web dizajn za frizerski salon s online rezervacijskim sustavom. Povećanje rezervacija za 80% i poboljšanje korisničkog iskustva. Integracija s kalendarom i SMS obavještavanje.',
+          technologies: ['React', 'Node.js', 'Booking System'],
+          development_time: '4-5 tjedana',
+          website_url: null,
+          image_url: null
+        },
+        {
+          id: 'demo-3',
+          title: 'Restoran - Meni i narudžbe',
+          description: 'Responzivna web stranica za restoran s digitalnim menijem i mogućnosti online narudžbe. Povećanje online narudžbi za 200% i brže učitavanje stranice.',
+          technologies: ['Next.js', 'TypeScript', 'Mobile First'],
+          development_time: '4 tjedna',
+          website_url: null,
+          image_url: null
+        }
+      ]
+
   return (
     <Section id="projekti" className="projects-section">
       <motion.div
@@ -148,54 +222,38 @@ export default function Projects() {
       {loading ? (
         <div className="projects-loading">Učitavanje projekata...</div>
       ) : (
-        <div className="projects-grid">
-          {projects.length > 0 ? (
-            projects.map((project, index) => (
-              <BounceCard key={project.id} project={project} index={index} />
-            ))
-          ) : (
-            <>
-              <BounceCard 
-                project={{
-                  id: 'demo-1',
-                  title: 'OPG - Online prodaja proizvoda',
-                  description: 'Web stranica za lokalni OPG s online shopom. Povećanje online narudžbi za 150% u prva 3 mjeseca. Mobilno optimizirana stranica s jednostavnim upravljanjem zalihama.',
-                  technologies: ['WordPress', 'WooCommerce', 'Responsive Design'],
-                  development_time: '3-4 tjedna',
-                  website_url: null,
-                  image_url: null
-                }}
-                index={0}
-              />
-              <BounceCard 
-                project={{
-                  id: 'demo-2',
-                  title: 'Frizerski salon - Rezervacije online',
-                  description: 'Moderni web dizajn za frizerski salon s online rezervacijskim sustavom. Povećanje rezervacija za 80% i poboljšanje korisničkog iskustva. Integracija s kalendarom i SMS obavještavanje.',
-                  technologies: ['React', 'Node.js', 'Booking System'],
-                  development_time: '4-5 tjedana',
-                  website_url: null,
-                  image_url: null
-                }}
-                index={1}
-              />
-              <BounceCard 
-                project={{
-                  id: 'demo-3',
-                  title: 'Restoran - Meni i narudžbe',
-                  description: 'Responzivna web stranica za restoran s digitalnim menijem i mogućnosti online narudžbe. Povećanje online narudžbi za 200% i brže učitavanje stranice.',
-                  technologies: ['Next.js', 'TypeScript', 'Mobile First'],
-                  development_time: '4 tjedna',
-                  website_url: null,
-                  image_url: null
-                }}
-                index={2}
-              />
-            </>
-          )}
+        <div className="projects-carousel-wrapper">
+          <div className="projects-carousel" ref={emblaRef}>
+            <div className="projects-carousel-container">
+              {displayProjects.map((project, index) => (
+                <div key={project.id || index} className="projects-carousel-slide">
+                  <BounceCard project={project} index={index} />
+                </div>
+              ))}
+            </div>
+          </div>
+          
+          <button
+            className="projects-carousel-button projects-carousel-button--prev"
+            onClick={scrollPrev}
+            disabled={!prevBtnEnabled}
+            aria-label="Previous project"
+            type="button"
+          >
+            <ChevronLeft size={24} />
+          </button>
+          
+          <button
+            className="projects-carousel-button projects-carousel-button--next"
+            onClick={scrollNext}
+            disabled={!nextBtnEnabled}
+            aria-label="Next project"
+            type="button"
+          >
+            <ChevronRight size={24} />
+          </button>
         </div>
       )}
     </Section>
   )
 }
-

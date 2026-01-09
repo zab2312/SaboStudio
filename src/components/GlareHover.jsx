@@ -14,7 +14,8 @@ const GlareHover = ({
   transitionDuration = 650,
   playOnce = false,
   className = '',
-  style = {}
+  style = {},
+  onClick
 }) => {
   const hex = glareColor.replace('#', '');
   let rgba = glareColor;
@@ -46,6 +47,7 @@ const GlareHover = ({
     <div
       className={`glare-hover ${playOnce ? 'glare-hover--play-once' : ''} ${className}`}
       style={{ ...vars, ...style }}
+      onClick={onClick}
     >
       {children}
     </div>

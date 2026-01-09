@@ -42,8 +42,13 @@ CREATE TABLE IF NOT EXISTS appointments (
   client_email VARCHAR(255) NOT NULL,
   appointment_date TIMESTAMP WITH TIME ZONE NOT NULL,
   status VARCHAR(50) DEFAULT 'pending',
+  package_selected VARCHAR(50), -- Selected package: 'start', 'upiti', or 'custom'
   created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc', NOW()) NOT NULL
 );
+
+-- Add package_selected column to existing appointments table (if table already exists)
+ALTER TABLE appointments 
+  ADD COLUMN IF NOT EXISTS package_selected VARCHAR(50);
 
 -- Working hours settings table
 CREATE TABLE IF NOT EXISTS working_hours (
@@ -79,6 +84,7 @@ CREATE TABLE IF NOT EXISTS audit_requests (
 -- Create indexes for better performance
 CREATE INDEX IF NOT EXISTS idx_appointments_date ON appointments(appointment_date);
 CREATE INDEX IF NOT EXISTS idx_appointments_status ON appointments(status);
+CREATE INDEX IF NOT EXISTS idx_appointments_package ON appointments(package_selected);
 CREATE INDEX IF NOT EXISTS idx_faqs_order ON faqs(order_index);
 CREATE INDEX IF NOT EXISTS idx_audit_requests_status ON audit_requests(status);
 CREATE INDEX IF NOT EXISTS idx_audit_requests_created ON audit_requests(created_at);

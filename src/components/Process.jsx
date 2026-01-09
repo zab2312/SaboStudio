@@ -36,11 +36,11 @@ export default function Process() {
   C 220 430, 360 260, 520 300
   S 760 350, 880 290
   S 1010 150, 1120 120
-  S 1170 130
+  S 1150 110, 1150 110
   `
 
   // Step positions along the path (as percentages of path length)
-  const stepPercentages = [0.17, 0.40, 0.65, 0.95]
+  const stepPercentages = [0.15, 0.40, 0.65, 0.95]
 
   // Calculate exact positions on the path after it's rendered
   useEffect(() => {

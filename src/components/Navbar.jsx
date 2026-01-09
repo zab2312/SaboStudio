@@ -89,7 +89,7 @@ export default function Navbar() {
                 <a href="#faq" onClick={(e) => handleNavClick(e, '#faq')}>FAQ</a>
                 <a href="#analiza" className="navbar-cta-mobile" onClick={(e) => handleNavClick(e, '#analiza')}>
                   <FileSearch size={18} />
-                  Besplatna analiza
+                  Pošalji web na provjeru
                 </a>
               </motion.div>
             )}
@@ -103,7 +103,7 @@ export default function Navbar() {
           </div>
           <a href="#analiza" className="navbar-cta" onClick={(e) => handleNavClick(e, '#analiza')}>
             <FileSearch size={18} />
-            <span>Besplatna analiza</span>
+            <span>Pošalji web na provjeru</span>
           </a>
         </div>
       </nav>

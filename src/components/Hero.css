@@ -1,6 +1,6 @@
 .hero-section {
-  padding-top: 120px;
-  padding-bottom: 80px;
+  padding-top: var(--hero-padding-top);
+  padding-bottom: var(--hero-padding-bottom);
 }
 
 .hero-content {
@@ -8,43 +8,43 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 32px;
+  gap: var(--space-lg);
 }
 
 .hero-title {
-  font-size: 56px;
+  font-size: var(--font-size-h1);
   font-weight: 800;
   color: #e6e6e6;
-  margin-bottom: 16px;
-  line-height: 1.2;
-  max-width: 900px;
+  margin-bottom: var(--space-sm);
+  line-height: var(--line-height-tight);
+  max-width: min(720px, 90vw); /* Reduced from 900px for denser feel */
 }
 
 .hero-subheadline {
-  font-size: 20px;
+  font-size: var(--font-size-body-lg);
   color: rgba(255, 255, 255, 0.85);
-  max-width: 800px;
-  line-height: 1.6;
+  max-width: var(--section-text-max-width);
+  line-height: var(--line-height-relaxed);
   font-weight: 400;
 }
 
 .hero-cta-buttons {
   display: flex;
-  gap: 16px;
+  gap: var(--space-md);
   flex-wrap: wrap;
   justify-content: center;
-  margin-top: 8px;
+  margin-top: var(--space-xs);
 }
 
 .hero-cta-primary {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
-  padding: 18px 36px;
+  gap: var(--space-sm);
+  padding: clamp(14px, 1.5vw, 18px) clamp(28px, 3vw, 32px);
   background: #dc2626;
   color: white;
   border-radius: 12px;
-  font-size: 18px;
+  font-size: var(--font-size-body);
   font-weight: 600;
   text-decoration: none;
   transition: all 0.3s ease;
@@ -89,17 +89,17 @@
 .hero-benefit-bullets {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
+  gap: var(--space-md);
   width: 100%;
-  max-width: 700px;
-  margin-top: 32px;
+  max-width: 560px; /* Reduced from 700px for denser feel */
+  margin-top: var(--space-lg);
 }
 
 .benefit-bullet {
   display: flex !important;
   align-items: center;
-  gap: 12px;
-  padding: 16px 20px;
+  gap: var(--space-sm);
+  padding: var(--space-md) clamp(16px, 1.8vw, 20px);
   background: transparent;
   text-align: left;
   transition: all 0.3s ease;
@@ -115,20 +115,12 @@
 }
 
 .benefit-bullet span {
-  font-size: 16px;
+  font-size: var(--font-size-body);
   color: rgba(255, 255, 255, 0.9);
   font-weight: 500;
 }
 
 @media (max-width: 768px) {
-  .hero-title {
-    font-size: 36px;
-  }
-  
-  .hero-subheadline {
-    font-size: 18px;
-  }
-  
   .hero-cta-buttons {
     flex-direction: column;
     width: 100%;

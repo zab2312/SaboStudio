@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { FileSearch, Calendar, TrendingUp, Smartphone, Zap, Target } from 'lucide-react'
+import { FileSearch, TrendingUp, Smartphone, Zap, Target } from 'lucide-react'
 import Section from './Section'
 import GlareHover from './GlareHover'
 import './Hero.css'
@@ -21,7 +21,7 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          Web stranice koje donose upite, rezervacije i nove klijente
+          Web dizajn za lokalne biznise koji ne žele prosječno rješenje.
         </motion.h1>
         
         <motion.p 
@@ -30,7 +30,7 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          Radimo web stranice i web rješenja za lokalna poduzeća – fokus na rezultate, ne samo na izgled.
+          Jasni paketi, transparentne cijene i iskren savjet prije svake ponude.
         </motion.p>
 
         <motion.div 
@@ -39,24 +39,15 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
         >
-          <a
+          <motion.a
             href="#analiza"
             className="hero-cta-primary"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
             <FileSearch size={20} />
-            Besplatna analiza web stranice
-          </a>
-          <a
-            href="#rezervacija"
-            className="hero-cta-secondary"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <Calendar size={20} />
-            Rezerviraj kratki poziv (30 min)
-          </a>
+            Pošalji web na provjeru
+          </motion.a>
         </motion.div>
 
         <div className="hero-benefit-bullets">

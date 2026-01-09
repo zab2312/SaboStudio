@@ -18,7 +18,7 @@
   position: relative;
   z-index: 1;
   width: 100%;
-  padding-top: 20px;
+  padding-top: 0;
 }
 
 /* Admin layout doesn't need padding-top since it doesn't have navbar */

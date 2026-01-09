@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion'
 import { Shield, Clock, Zap, TrendingUp } from 'lucide-react'
 import Section from './Section'
-import GlareHover from './GlareHover'
 import './WhyWebsites.css'
 
 export default function WhyWebsites() {
@@ -43,38 +42,29 @@ export default function WhyWebsites() {
         </p>
       </motion.div>
 
-      <div className="why-cards-grid">
+      <div className="why-statements-list">
         {cards.map((card, index) => {
           const Icon = card.icon
+          const isLeft = index % 2 === 0
           return (
             <motion.div
               key={index}
+              className={`why-statement ${isLeft ? 'align-left' : 'align-right'}`}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
-              whileHover={{ scale: 1.05, y: -5 }}
             >
-              <GlareHover
-                width="100%"
-                height="100%"
-                background="rgba(255, 255, 255, 0.06)"
-                borderRadius="16px"
-                borderColor="rgba(255, 255, 255, 0.1)"
-                glareColor="#ffffff"
-                glareOpacity={0.3}
-                glareAngle={-30}
-                glareSize={300}
-                transitionDuration={800}
-                playOnce={false}
-                className="why-card"
-              >
-                <div className="why-card-icon">
-                  <Icon size={32} />
+              <div className="why-statement-content">
+                <div className="why-statement-icon">
+                  <Icon size={24} />
                 </div>
-                <h3 className="why-card-title">{card.title}</h3>
-                <p className="why-card-description">{card.description}</p>
-              </GlareHover>
+                <div className="why-statement-text">
+                  <h3 className="why-statement-title">{card.title}</h3>
+                  <p className="why-statement-description">{card.description}</p>
+                </div>
+              </div>
+              {index < cards.length - 1 && <div className="why-statement-divider"></div>}
             </motion.div>
           )
         })}

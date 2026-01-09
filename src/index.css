@@ -8,10 +8,54 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Design System: Typography Scale - ~20% more compact for denser feel */
+:root {
+  /* Typography scale - reduced by 15-20% while maintaining hierarchy */
+  --font-size-h1: clamp(26px, 3.4vw, 37px); /* Hero title: reduced from 46px */
+  --font-size-h2: clamp(23px, 2.6vw, 31px); /* Section titles: reduced from 38px */
+  --font-size-h3: clamp(16px, 1.8vw, 20px); /* Card/feature titles: reduced from 24px */
+  --font-size-h4: clamp(15px, 1.6vw, 16px); /* Subsection titles: reduced from 20px */
+  --font-size-body-lg: clamp(14px, 1.45vw, 15px); /* Large body text: reduced from 18px */
+  --font-size-body: clamp(13px, 1.3vw, 14px); /* Body text: reduced from 16px */
+  --font-size-body-sm: clamp(12px, 1.2vw, 13px); /* Small body text: reduced from 15px */
+  --font-size-caption: clamp(11px, 1.1vw, 12px); /* Captions: reduced from 14px */
+  
+  /* Line heights - tightened for better density */
+  --line-height-tight: 1.15;
+  --line-height-normal: 1.4;
+  --line-height-relaxed: 1.5;
+  --line-height-loose: 1.6;
+  
+  /* Spacing scale - reduced by 20-25% for tighter layout */
+  --space-xs: clamp(6px, 0.65vw, 10px);
+  --space-sm: clamp(10px, 1vw, 13px);
+  --space-md: clamp(13px, 1.3vw, 19px);
+  --space-lg: clamp(19px, 1.9vw, 26px);
+  --space-xl: clamp(26px, 2.6vw, 38px);
+  --space-2xl: clamp(38px, 3.8vw, 51px);
+  --space-3xl: clamp(51px, 5.1vw, 72px); /* Hero top padding: reduced from 90px */
+  
+  /* Section padding - reduced by 20-25% for better density */
+  --section-padding-y: clamp(36px, 3.75vw, 48px); /* reduced from 64px */
+  --section-padding-x: clamp(13px, 1.6vw, 16px); /* reduced from 20px */
+  --section-content-max-width: 1000px; /* reduced from 1200px for denser feel */
+  --section-text-max-width: 680px; /* reduced from 800px for denser text */
+  
+  /* Card spacing - reduced by 20% */
+  --card-padding: clamp(16px, 1.76vw, 21px); /* reduced from 26px */
+  --card-gap: clamp(13px, 1.44vw, 18px); /* reduced from 22px */
+  
+  /* Component specific - reduced by 20-25% */
+  --hero-padding-top: clamp(48px, 6.4vw, 72px); /* reduced from 90px */
+  --hero-padding-bottom: clamp(38px, 4.8vw, 51px); /* reduced from 64px */
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-relaxed);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: #0a0a0a;
