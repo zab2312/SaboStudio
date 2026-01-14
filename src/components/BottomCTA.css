@@ -11,7 +11,7 @@
 .bottom-cta-title {
   font-size: clamp(32px, 3.5vw, 38px); /* Reduced from 42px, using h2 scale */
   font-weight: 700;
-  color: #ffffff;
+  color: #F5E6D3;
   margin-bottom: var(--space-lg);
   line-height: var(--line-height-tight);
 }
@@ -19,7 +19,7 @@
 .bottom-cta-text {
   font-size: var(--font-size-body-lg);
   line-height: var(--line-height-relaxed);
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(245, 230, 211, 0.8);
   margin-bottom: var(--space-lg);
 }
 
@@ -28,30 +28,30 @@
   align-items: center;
   gap: var(--space-sm);
   padding: clamp(16px, 1.7vw, 18px) clamp(32px, 3.5vw, 36px); /* Reduced from 20px 40px */
-  background: #dc2626;
-  color: white;
+  background: #F5E6D3;
+  color: #000000;
   border-radius: 12px;
   font-size: var(--font-size-body);
   font-weight: 600;
   text-decoration: none;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 20px rgba(220, 38, 38, 0.4);
+  box-shadow: 0 4px 20px rgba(245, 230, 211, 0.4);
   margin-bottom: var(--space-md);
 }
 
 .bottom-cta-button:hover {
-  background: #b91c1c;
-  box-shadow: 0 6px 30px rgba(220, 38, 38, 0.6);
+  background: #E8DCC6;
+  box-shadow: 0 6px 30px rgba(245, 230, 211, 0.6);
   transform: translateY(-2px);
 }
 
 .bottom-cta-button svg {
-  color: white;
+  color: #000000;
 }
 
 .bottom-cta-microcopy {
   font-size: var(--font-size-caption);
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(245, 230, 211, 0.6);
   font-style: italic;
 }
 

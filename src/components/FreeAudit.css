@@ -6,7 +6,7 @@
   max-width: 480px; /* Reduced from 600px for denser feel */
   margin: var(--space-xl) auto 0;
   padding: var(--card-padding);
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(245, 230, 211, 0.06);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 16px;
 }
@@ -22,39 +22,39 @@
   font-size: var(--font-size-caption);
   font-weight: 600;
   margin-bottom: var(--space-xs);
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(245, 230, 211, 0.9);
 }
 
 .form-group label svg {
-  color: #dc2626;
+  color: #F5E6D3;
 }
 
 .form-group input {
   width: 100%;
   padding: clamp(12px, 1.3vw, 14px) clamp(16px, 1.7vw, 18px);
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(245, 230, 211, 0.08);
+  border: 1px solid rgba(245, 230, 211, 0.2);
   border-radius: 8px;
-  color: white;
+  color: #F5E6D3;
   font-size: var(--font-size-body);
   transition: all 0.3s ease;
 }
 
 .form-group input:focus {
   outline: none;
-  border-color: #dc2626;
-  background: rgba(255, 255, 255, 0.12);
+  border-color: #F5E6D3;
+  background: rgba(245, 230, 211, 0.12);
 }
 
 .form-group input::placeholder {
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(245, 230, 211, 0.4);
 }
 
 .submit-button {
   width: 100%;
   padding: clamp(16px, 1.7vw, 18px);
-  background: #dc2626;
-  color: white;
+  background: #F5E6D3;
+  color: #000000;
   border: none;
   border-radius: 8px;
   font-size: var(--font-size-body);
@@ -65,9 +65,9 @@
 }
 
 .submit-button:hover:not(:disabled) {
-  background: #b91c1c;
+  background: #E8DCC6;
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.4);
+  box-shadow: 0 4px 12px rgba(245, 230, 211, 0.4);
 }
 
 .submit-button:disabled {
@@ -89,7 +89,7 @@
 .form-privacy {
   margin-top: var(--space-md);
   font-size: var(--font-size-caption);
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(245, 230, 211, 0.5);
   text-align: center;
 }
 

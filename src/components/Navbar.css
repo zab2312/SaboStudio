@@ -6,7 +6,7 @@
   z-index: 1000;
   width: calc(100% - 40px);
   max-width: 1200px;
-  background: rgba(10, 10, 10, 0.7);
+  background: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 16px;
@@ -17,7 +17,7 @@
 
 .navbar.scrolled {
   top: 10px;
-  background: rgba(10, 10, 10, 0.85);
+  background: rgba(0, 0, 0, 0.85);
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
 }
 
@@ -39,7 +39,7 @@
   font-family: 'League Spartan', sans-serif;
   font-size: 22px;
   font-weight: 700;
-  color: #e6e6e6;
+  color: #F5E6D3;
   text-decoration: none;
   white-space: nowrap;
   letter-spacing: -1.5px;
@@ -49,7 +49,7 @@
   display: none;
   background: transparent;
   border: none;
-  color: white;
+  color: #F5E6D3;
   cursor: pointer;
   padding: 8px;
   border-radius: 8px;
@@ -57,7 +57,7 @@
 }
 
 .navbar-toggle:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(245, 230, 211, 0.1);
 }
 
 .navbar-menu-mobile {
@@ -67,7 +67,7 @@
   left: 0;
   right: 0;
   margin-top: 12px;
-  background: rgba(10, 10, 10, 0.95);
+  background: rgba(0, 0, 0, 0.95);
   backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 12px;
@@ -78,7 +78,7 @@
 }
 
 .navbar-menu-mobile a {
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(245, 230, 211, 0.9);
   text-decoration: none;
   font-size: 16px;
   font-weight: 500;
@@ -88,13 +88,13 @@
 }
 
 .navbar-menu-mobile a:hover {
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
+  background: rgba(245, 230, 211, 0.1);
+  color: #F5E6D3;
 }
 
 .navbar-cta-mobile {
-  background: #dc2626 !important;
-  color: white !important;
+  background: #F5E6D3 !important;
+  color: #000000 !important;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -103,7 +103,7 @@
 }
 
 .navbar-cta-mobile:hover {
-  background: #b91c1c !important;
+  background: #E8DCC6 !important;
 }
 
 .navbar-links {
@@ -115,7 +115,7 @@
 }
 
 .navbar-links a {
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(245, 230, 211, 0.8);
   text-decoration: none;
   font-size: 15px;
   font-weight: 500;
@@ -124,7 +124,7 @@
 }
 
 .navbar-links a:hover {
-  color: white;
+  color: #F5E6D3;
 }
 
 .navbar-cta {
@@ -132,8 +132,8 @@
   align-items: center;
   gap: 8px;
   padding: 10px 20px;
-  background: #dc2626;
-  color: white;
+  background: #F5E6D3;
+  color: #000000;
   border-radius: 8px;
   font-size: 15px;
   font-weight: 600;
@@ -143,13 +143,13 @@
 }
 
 .navbar-cta:hover {
-  background: #b91c1c;
+  background: #E8DCC6;
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.4);
+  box-shadow: 0 4px 12px rgba(245, 230, 211, 0.4);
 }
 
 .navbar-cta svg {
-  color: white;
+  color: #000000;
   flex-shrink: 0;
 }
 

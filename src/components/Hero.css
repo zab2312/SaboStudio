@@ -14,7 +14,7 @@
 .hero-title {
   font-size: var(--font-size-h1);
   font-weight: 800;
-  color: #e6e6e6;
+  color: #F5E6D3;
   margin-bottom: var(--space-sm);
   line-height: var(--line-height-tight);
   max-width: min(720px, 90vw); /* Reduced from 900px for denser feel */
@@ -22,7 +22,7 @@
 
 .hero-subheadline {
   font-size: var(--font-size-body-lg);
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(245, 230, 211, 0.85);
   max-width: var(--section-text-max-width);
   line-height: var(--line-height-relaxed);
   font-weight: 400;
@@ -41,24 +41,24 @@
   align-items: center;
   gap: var(--space-sm);
   padding: clamp(14px, 1.5vw, 18px) clamp(28px, 3vw, 32px);
-  background: #dc2626;
-  color: white;
+  background: #F5E6D3;
+  color: #000000;
   border-radius: 12px;
   font-size: var(--font-size-body);
   font-weight: 600;
   text-decoration: none;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 20px rgba(220, 38, 38, 0.4);
+  box-shadow: 0 4px 20px rgba(245, 230, 211, 0.4);
 }
 
 .hero-cta-primary:hover {
-  background: #b91c1c;
-  box-shadow: 0 6px 30px rgba(220, 38, 38, 0.6);
+  background: #E8DCC6;
+  box-shadow: 0 6px 30px rgba(245, 230, 211, 0.6);
   transform: translateY(-2px);
 }
 
 .hero-cta-primary svg {
-  color: white;
+  color: #000000;
 }
 
 .hero-cta-secondary {
@@ -67,8 +67,8 @@
   gap: 12px;
   padding: 18px 36px;
   background: transparent;
-  color: white;
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  color: #F5E6D3;
+  border: 2px solid rgba(245, 230, 211, 0.3);
   border-radius: 12px;
   font-size: 18px;
   font-weight: 600;
@@ -77,13 +77,13 @@
 }
 
 .hero-cta-secondary:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.5);
+  background: rgba(245, 230, 211, 0.1);
+  border-color: rgba(245, 230, 211, 0.5);
   transform: translateY(-2px);
 }
 
 .hero-cta-secondary svg {
-  color: white;
+  color: #F5E6D3;
 }
 
 .hero-benefit-bullets {
@@ -106,17 +106,17 @@
 }
 
 .benefit-bullet:hover {
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 40px rgba(220, 38, 38, 0.3), 0 0 60px rgba(220, 38, 38, 0.15);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 40px rgba(245, 230, 211, 0.3), 0 0 60px rgba(245, 230, 211, 0.15);
 }
 
 .benefit-icon {
-  color: #dc2626;
+  color: #F5E6D3;
   flex-shrink: 0;
 }
 
 .benefit-bullet span {
   font-size: var(--font-size-body);
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(245, 230, 211, 0.9);
   font-weight: 500;
 }
 

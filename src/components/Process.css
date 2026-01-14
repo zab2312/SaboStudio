@@ -19,14 +19,14 @@
 .process-title {
   font-size: 42px;
   font-weight: 700;
-  color: #ffffff;
+  color: #F5E6D3;
   margin-bottom: 10px;
   line-height: 1.2;
 }
 
 .process-subtitle {
   font-size: 18px;
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(245, 230, 211, 0.8);
   max-width: 700px;
   margin: 0 auto;
   line-height: 1.6;
@@ -52,7 +52,7 @@
 }
 
 .process-path {
-  filter: drop-shadow(0 2px 4px rgba(220, 38, 38, 0.2));
+  filter: drop-shadow(0 2px 4px rgba(245, 230, 211, 0.2));
 }
 
 .process-steps-wrapper {
@@ -101,8 +101,8 @@
   display: inline-block;
   width: 32px;
   height: 32px;
-  background: #dc2626;
-  color: #ffffff;
+  background: #F5E6D3;
+  color: #000000;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -110,31 +110,31 @@
   font-size: 14px;
   font-weight: 700;
   margin: 0 auto 12px;
-  box-shadow: 0 2px 8px rgba(220, 38, 38, 0.3);
+  box-shadow: 0 2px 8px rgba(245, 230, 211, 0.3);
 }
 
 .process-step:hover .process-step-number {
   /* Removed transform: scale() - using design system scaling instead */
-  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.4);
+  box-shadow: 0 4px 12px rgba(245, 230, 211, 0.4);
 }
 
 .process-step-title {
   font-size: 18px;
   font-weight: 700;
-  color: #ffffff;
+  color: #F5E6D3;
   margin-bottom: 8px;
   line-height: 1.3;
 }
 
 .process-step-description {
   font-size: 14px;
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(245, 230, 211, 0.8);
   line-height: 1.6;
   margin: 0;
 }
 
 .process-step:hover .process-step-title {
-  color: #dc2626;
+  color: #E8DCC6;
 }
 
 /* Responsive Design */
@@ -227,7 +227,7 @@
     top: 0;
     bottom: 0;
     width: 3px;
-    background: linear-gradient(to bottom, #dc2626, #dc2626);
+    background: linear-gradient(to bottom, #F5E6D3, #F5E6D3);
     transform: translateX(-50%);
     z-index: 1;
   }

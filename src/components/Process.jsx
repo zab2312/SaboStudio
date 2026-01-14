@@ -131,10 +131,10 @@ export default function Process() {
           <defs>
             {/* Combined gradient with color and opacity for fade in/out */}
             <linearGradient id="pathGradient" x1="0" y1="0" x2={viewBox.width} y2="0" gradientUnits="userSpaceOnUse">
-              <stop offset="0%" stopColor="#dc2626" stopOpacity="0" />
-              <stop offset="10%" stopColor="#dc2626" stopOpacity="1" />
-              <stop offset="90%" stopColor="#e53935" stopOpacity="1" />
-              <stop offset="100%" stopColor="#e53935" stopOpacity="0" />
+              <stop offset="0%" stopColor="#F5E6D3" stopOpacity="0" />
+              <stop offset="10%" stopColor="#F5E6D3" stopOpacity="1" />
+              <stop offset="90%" stopColor="#E8DCC6" stopOpacity="1" />
+              <stop offset="100%" stopColor="#E8DCC6" stopOpacity="0" />
             </linearGradient>
             
             {/* Glow filter with red glow effect */}
@@ -143,9 +143,9 @@ export default function Process() {
               <feColorMatrix 
                 in="coloredBlur" 
                 type="matrix" 
-                values="0 0 0 0 0.86
-                        0 0 0 0 0.15
-                        0 0 0 0 0.15
+                values="0 0 0 0 0.96
+                        0 0 0 0 0.90
+                        0 0 0 0 0.83
                         0 0 0 0.8 0"/>
               <feMerge>
                 <feMergeNode in="coloredBlur"/>
@@ -178,8 +178,8 @@ export default function Process() {
               cx={pos.originalX || pos.x}
               cy={pos.originalY || pos.y}
               r="8"
-              fill="#ffffff"
-              stroke="#dc2626"
+              fill="#F5E6D3"
+              stroke="#E8DCC6"
               strokeWidth="3"
               initial={{ scale: 0, opacity: 0 }}
               whileInView={{ scale: 1, opacity: 1 }}

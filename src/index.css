@@ -58,8 +58,8 @@ body {
   line-height: var(--line-height-relaxed);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: #0a0a0a;
-  color: #ffffff;
+  background: #000000;
+  color: #F5E6D3;
   overflow-x: hidden;
 }
 
