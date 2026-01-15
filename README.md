@@ -83,8 +83,15 @@ Projekt koristi Supabase s sljedećim tablicama:
 - `faqs` - Česta pitanja
 - `appointments` - Rezervacije termina
 - `working_hours` - Radno vrijeme
+- `audit_requests` - Zahtjevi za besplatnu analizu
 
 SQL schema se nalazi u `supabase-schema.sql` datoteki.
+
+## 📧 Email Obavijesti
+
+Za postavljanje email obavijesti kada netko rezervira poziv ili zatraži analizu:
+- **Brzi vodič (bez CLI-ja)**: [QUICK_SETUP.md](./QUICK_SETUP.md) ⚡
+- **Detaljni vodič**: [EMAIL_SETUP.md](./EMAIL_SETUP.md)
 
 ## 🎭 Animacije
 
