@@ -6,7 +6,7 @@ export default function AdminLayout({ children }) {
     <div className="layout admin-layout">
       <div className="aurora-background">
         <Aurora
-          colorStops={["#3A29FF", "#FF94B4", "#FF3232"]}
+          colorStops={["#F5E6D3", "#E8DCC6", "#F5E6D3"]}
           blend={0.5}
           amplitude={1.0}
           speed={0.5}
