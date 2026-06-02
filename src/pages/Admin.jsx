@@ -6,15 +6,10 @@ import 'react-quill/dist/quill.snow.css'
 import { supabase } from '../lib/supabase'
 import AdminLayout from '../components/AdminLayout'
 import Section from '../components/Section'
+import { packageMap } from '../constants/packages'
 import './Admin.css'
 
 export default function Admin() {
-  // Package mapping
-  const packageMap = {
-    start: 'START WEB',
-    upiti: 'WEB KOJI DONOSI UPITE',
-    custom: 'CUSTOM WEB'
-  }
   const [activeTab, setActiveTab] = useState('projects')
   const [projects, setProjects] = useState([])
   const [appointments, setAppointments] = useState([])

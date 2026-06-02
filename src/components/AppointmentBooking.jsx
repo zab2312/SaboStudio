@@ -4,6 +4,8 @@ import { supabase } from '../lib/supabase'
 import { format, addDays, addWeeks, startOfWeek, eachDayOfInterval, isSameDay, parseISO, setHours, setMinutes } from 'date-fns'
 import hr from 'date-fns/locale/hr'
 import Section from './Section'
+import PackageSelect from './PackageSelect'
+import { packageMap } from '../constants/packages'
 import './AppointmentBooking.css'
 
 export default function AppointmentBooking() {
@@ -18,13 +20,6 @@ export default function AppointmentBooking() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitSuccess, setSubmitSuccess] = useState(false)
   const [weekOffset, setWeekOffset] = useState(0)
-
-  // Package mapping
-  const packageMap = {
-    start: 'START WEB',
-    upiti: 'WEB KOJI DONOSI UPITE',
-    custom: 'CUSTOM WEB'
-  }
 
   // Read URL params on mount and handle package selection
   useEffect(() => {
@@ -364,29 +359,22 @@ export default function AppointmentBooking() {
             </motion.div>
           )}
 
-          <div className="form-group">
+          <div className="form-group form-group-package">
             <label htmlFor="packageSelect">Paket</label>
-            <select
+            <PackageSelect
               id="packageSelect"
               value={selectedPackage}
-              onChange={(e) => {
-                setSelectedPackage(e.target.value)
-                // Update URL param
+              onChange={(packageValue) => {
+                setSelectedPackage(packageValue)
                 const url = new URL(window.location)
-                if (e.target.value) {
-                  url.searchParams.set('paket', e.target.value)
+                if (packageValue) {
+                  url.searchParams.set('paket', packageValue)
                 } else {
                   url.searchParams.delete('paket')
                 }
                 window.history.pushState({}, '', url)
               }}
-              className="form-select"
-            >
-              <option value="">Odaberite paket (opcionalno)</option>
-              <option value="start">START WEB</option>
-              <option value="upiti">WEB KOJI DONOSI UPITE</option>
-              <option value="custom">CUSTOM WEB</option>
-            </select>
+            />
           </div>
           
           <div className="form-group">

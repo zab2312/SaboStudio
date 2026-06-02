@@ -5,6 +5,7 @@ import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
 
 const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY')
 const ADMIN_EMAIL = Deno.env.get('ADMIN_EMAIL') || 'admin@yourdomain.com'
+const FROM_EMAIL = Deno.env.get('FROM_EMAIL') || 'onboarding@resend.dev' // Resend test domain
 
 serve(async (req) => {
   try {
@@ -19,12 +20,38 @@ serve(async (req) => {
       })
     }
 
+    // Log incoming request
+    console.log('Received request:', {
+      method: req.method,
+      url: req.url,
+      hasBody: !!req.body
+    })
+
     const { record, table } = await req.json()
+    
+    console.log('Parsed data:', { table, recordKeys: record ? Object.keys(record) : null })
 
     if (!record) {
+      console.error('Error: Record data is required')
       return new Response(
         JSON.stringify({ error: 'Record data is required' }),
         { status: 400, headers: { 'Content-Type': 'application/json' } }
+      )
+    }
+
+    if (!RESEND_API_KEY) {
+      console.error('Error: RESEND_API_KEY not set')
+      return new Response(
+        JSON.stringify({ error: 'RESEND_API_KEY environment variable is not set' }),
+        { status: 500, headers: { 'Content-Type': 'application/json' } }
+      )
+    }
+
+    if (!ADMIN_EMAIL || ADMIN_EMAIL === 'admin@yourdomain.com') {
+      console.error('Error: ADMIN_EMAIL not set properly')
+      return new Response(
+        JSON.stringify({ error: 'ADMIN_EMAIL environment variable is not set or is using default value' }),
+        { status: 500, headers: { 'Content-Type': 'application/json' } }
       )
     }
 
@@ -78,6 +105,10 @@ ${record.website_url ? `<p><strong>Web stranica:</strong> <a href="${record.webs
     }
 
     // Slanje emaila preko Resend API-ja
+    console.log('Sending email to:', ADMIN_EMAIL)
+    console.log('From email:', FROM_EMAIL)
+    console.log('Subject:', subject)
+    
     const resendResponse = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
@@ -85,7 +116,7 @@ ${record.website_url ? `<p><strong>Web stranica:</strong> <a href="${record.webs
         'Authorization': `Bearer ${RESEND_API_KEY}`,
       },
       body: JSON.stringify({
-        from: 'SaboStudio <noreply@yourdomain.com>',
+        from: `SaboStudio <${FROM_EMAIL}>`,
         to: [ADMIN_EMAIL],
         subject: subject,
         html: emailBody,
@@ -94,7 +125,11 @@ ${record.website_url ? `<p><strong>Web stranica:</strong> <a href="${record.webs
 
     if (!resendResponse.ok) {
       const errorData = await resendResponse.text()
-      console.error('Resend API error:', errorData)
+      console.error('Resend API error:', {
+        status: resendResponse.status,
+        statusText: resendResponse.statusText,
+        error: errorData
+      })
       return new Response(
         JSON.stringify({ error: 'Failed to send email', details: errorData }),
         { status: 500, headers: { 'Content-Type': 'application/json' } }
@@ -102,6 +137,7 @@ ${record.website_url ? `<p><strong>Web stranica:</strong> <a href="${record.webs
     }
 
     const result = await resendResponse.json()
+    console.log('Email sent successfully:', result)
 
     return new Response(
       JSON.stringify({ success: true, messageId: result.id }),

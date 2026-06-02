@@ -35,7 +35,12 @@ Ovaj vodič je za one koji ne žele ili ne mogu instalirati Supabase CLI. Deploy
    - **Name**: `ADMIN_EMAIL`
    - **Value**: Vaša email adresa (npr. `vas.email@gmail.com`)
 
-5. Kliknite **Save** za oba secret-a
+   **Treći secret (opcionalno):**
+   - **Name**: `FROM_EMAIL`
+   - **Value**: Email adresa s koje se šalje (default: `onboarding@resend.dev` za testiranje)
+   - Ako imate verificiran domen u Resend-u, možete koristiti `noreply@vasdomen.com`
+
+5. Kliknite **Save** za sve secret-e
 
 ## Korak 4: Postavite Database Webhooks
 
@@ -105,12 +110,19 @@ Ovaj vodič je za one koji ne žele ili ne mogu instalirati Supabase CLI. Deploy
 
 ## Problem sa slanjem emaila?
 
-Provjerite:
+**Prvo provjerite Edge Function logove:**
+1. Idite na **Edge Functions** > `send-notification` > **Logs**
+2. Provjerite da li se pojavljuju greške ili poruke
+
+**Provjerite:**
 - ✅ Da je Resend API ključ ispravan i aktivan
-- ✅ Da je ADMIN_EMAIL postavljen u secrets
+- ✅ Da je ADMIN_EMAIL postavljen u secrets (i da NIJE `admin@yourdomain.com`)
 - ✅ Da webhook-ovi imaju ispravan URL
 - ✅ Da su header-i pravilno postavljeni (Authorization i Content-Type)
 - ✅ Da je Edge Function uspješno deployana (vidite je u listi)
+- ✅ Da webhook-ovi imaju **Recent deliveries** kada napravite rezervaciju
+
+**Detaljne debugging upute:** Pogledajte [DEBUG_EMAIL.md](./DEBUG_EMAIL.md)
 
 ## Potrebna dodatna pomoć?
 
