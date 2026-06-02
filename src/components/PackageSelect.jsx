@@ -1,19 +1,22 @@
 import { useState, useRef, useEffect, useId } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronDown, Check, Package } from 'lucide-react'
-import { PACKAGE_GROUPS, getPackageLabel } from '../constants/packages'
+import { getPackageLabel } from '../lib/packagesApi'
 import './PackageSelect.css'
 
-export default function PackageSelect({ id, value, onChange }) {
+export default function PackageSelect({ id, value, onChange, groups = [] }) {
   const [open, setOpen] = useState(false)
   const [highlightIndex, setHighlightIndex] = useState(-1)
   const containerRef = useRef(null)
   const listboxId = useId()
 
-  const flatOptions = PACKAGE_GROUPS.flatMap((group) => group.options)
+  const flatOptions = groups.flatMap((group) => group.options)
   const totalItems = flatOptions.length + 1
 
-  const selectedLabel = value ? getPackageLabel(value) : null
+  const packageMap = Object.fromEntries(
+    flatOptions.map((option) => [option.value, option.label])
+  )
+  const selectedLabel = value ? getPackageLabel(packageMap, value) : null
   const selectedIndex = flatOptions.findIndex((option) => option.value === value)
 
   useEffect(() => {
@@ -129,7 +132,7 @@ export default function PackageSelect({ id, value, onChange }) {
               <span>Bez odabira paketa</span>
             </button>
 
-            {PACKAGE_GROUPS.map((group) => (
+            {groups.map((group) => (
               <div key={group.label} className="package-select-group">
                 <div className="package-select-group-label">{group.label}</div>
                 {group.options.map((option) => {

@@ -1,112 +1,14 @@
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Check } from 'lucide-react'
+import { fetchPackagesContent, mapDbPackageToCard } from '../lib/packagesApi'
 import Section from './Section'
 import GlareHover from './GlareHover'
 import './Packages.css'
 
-const webPackages = [
-  {
-    key: 'start',
-    name: 'START WEB',
-    description: 'Za lokalne obrtnike i uslužne biznise kojima treba profesionalna web stranica bez komplikacija.',
-    features: [
-      '1–3 stranice (Naslovna, Usluge, Kontakt)',
-      'Moderan i čist dizajn',
-      'Prilagodba za mobitele, tablete i računala',
-      'Kontakt forma i gumb za poziv ili WhatsApp',
-      'Osnovna SEO struktura i optimizacija brzine',
-    ],
-    price: 'Od 490 €',
-    isPopular: false,
-  },
-  {
-    key: 'upiti',
-    name: 'WEB KOJI DONOSI UPITE',
-    description: 'Za lokalne biznise koji žele da im se klijenti aktivno javljaju putem web stranice.',
-    features: [
-      'Sve iz paketa START WEB',
-      '4–6 stranica s jasnom strukturom sadržaja',
-      'Dizajn i raspored usmjeren na upite i kontakt',
-      'Tekstovi prilagođeni lokalnoj publici i uslugama',
-      'Osnovna on-page SEO optimizacija',
-      'Integracija Google Mapsa i recenzija (po potrebi)',
-      'Savjetovanje oko sadržaja i strukture weba',
-    ],
-    price: 'Od 890 €',
-    isPopular: true,
-  },
-  {
-    key: 'custom',
-    name: 'CUSTOM WEB',
-    description: 'Za biznise kojima treba potpuno prilagođena web stranica i jača online prisutnost.',
-    features: [
-      'Sve iz paketa WEB KOJI DONOSI UPITE',
-      'Potpuno prilagođen dizajn (bez gotovih predložaka)',
-      'Napredna struktura stranica i sadržaja',
-      'Dodatne landing sekcije po potrebi',
-      'Integracije (online rezervacije, napredne forme, CRM, newsletter i slično)',
-      'Individualna suradnja 1-na-1 kroz cijeli projekt',
-    ],
-    price: 'Od 1.600 €',
-    isPopular: false,
-  },
-]
-
-const socialPackages = [
-  {
-    key: 'start-social',
-    name: 'START SOCIAL',
-    description: 'Za lokalne biznise koji žele redovnu i profesionalnu prisutnost na društvenim mrežama.',
-    features: [
-      '8 objava mjesečno',
-      'Dizajn objava i osnovni copywriting',
-      'Plan objava za cijeli mjesec',
-      'Objava sadržaja na 1 platformi',
-      'Osnovna optimizacija profila',
-      'Mjesečni pregled aktivnosti',
-    ],
-    price: 'Od 290 € / mj',
-    isPopular: false,
-  },
-  {
-    key: 'growth-social',
-    name: 'GROWTH SOCIAL',
-    description: 'Za biznise koji žele aktivnije graditi prisutnost i privlačiti nove klijente.',
-    features: [
-      'Sve iz paketa START SOCIAL',
-      '12–16 objava mjesečno',
-      'Reels / kratki video sadržaj',
-      'Profesionalni copywriting',
-      'Upravljanje komentarima i porukama',
-      'Objava na više platformi',
-      'Mjesečni izvještaj i prijedlozi za rast',
-    ],
-    price: 'Od 490 € / mj',
-    isPopular: true,
-  },
-  {
-    key: 'content-partner',
-    name: 'CONTENT PARTNER',
-    description: 'Za tvrtke koje žele prepustiti cijelu komunikaciju i sadržaj stručnjaku.',
-    features: [
-      'Sve iz paketa GROWTH SOCIAL',
-      '20+ objava mjesečno',
-      'Napredna content strategija',
-      'Više video sadržaja',
-      'Redovite konzultacije',
-      'Planiranje kampanja i promocija',
-      'Prioritetna podrška',
-      'Individualni pristup',
-    ],
-    price: 'Od 890 € / mj',
-    isPopular: false,
-  },
-]
-
 function PackageCard({ pkg, index, onPackageClick }) {
   return (
     <motion.div
-      key={pkg.key}
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -159,6 +61,40 @@ function PackageCard({ pkg, index, onPackageClick }) {
 }
 
 export default function Packages() {
+  const [settings, setSettings] = useState(null)
+  const [sections, setSections] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
+
+  useEffect(() => {
+    loadPackages()
+  }, [])
+
+  const loadPackages = async () => {
+    try {
+      setLoading(true)
+      setError(null)
+      const { settings: pageSettings, sections: loadedSections } = await fetchPackagesContent({
+        publishedOnly: true,
+      })
+
+      setSettings(pageSettings)
+      setSections(
+        loadedSections
+          .filter((section) => section.packages.length > 0)
+          .map((section) => ({
+            ...section,
+            packages: section.packages.map(mapDbPackageToCard),
+          }))
+      )
+    } catch (err) {
+      console.error('Error loading packages:', err)
+      setError('Paketi se trenutno ne mogu učitati.')
+    } finally {
+      setLoading(false)
+    }
+  }
+
   const handlePackageClick = (packageKey) => {
     const url = new URL(window.location)
     url.searchParams.set('paket', packageKey)
@@ -186,6 +122,24 @@ export default function Packages() {
     scrollToBooking()
   }
 
+  if (loading) {
+    return (
+      <Section id="paketi" className="packages-section">
+        <p className="packages-loading">Učitavanje paketa...</p>
+      </Section>
+    )
+  }
+
+  if (error || !settings) {
+    return (
+      <Section id="paketi" className="packages-section">
+        <p className="packages-error">{error || 'Paketi nisu konfigurirani.'}</p>
+      </Section>
+    )
+  }
+
+  const comboKey = settings.combo_package_key || 'web-social'
+
   return (
     <Section id="paketi" className="packages-section">
       <motion.div
@@ -194,73 +148,63 @@ export default function Packages() {
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
       >
-        <h2 className="section-title">Paketi usluga</h2>
-        <p className="section-description">
-          Jasna struktura, transparentne cijene. Svaki paket prilagođavamo vašim stvarnim potrebama.
-        </p>
+        <h2 className="section-title">{settings.page_title}</h2>
+        <p className="section-description">{settings.page_description}</p>
       </motion.div>
 
-      <div className="packages-subsection">
-        <h3 className="packages-subsection-title">Web paketi</h3>
-      </div>
+      {sections.map((section, sectionIndex) => (
+        <div key={section.id}>
+          <motion.div
+            className={`packages-subsection ${sectionIndex > 0 ? 'packages-subsection-social' : ''}`}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h3 className="packages-subsection-title">{section.title}</h3>
+            {section.description && (
+              <p className="packages-subsection-description">{section.description}</p>
+            )}
+          </motion.div>
+          <div className="packages-grid">
+            {section.packages.map((pkg, index) => (
+              <PackageCard key={pkg.key} pkg={pkg} index={index} onPackageClick={handlePackageClick} />
+            ))}
+          </div>
+        </div>
+      ))}
 
-      <div className="packages-grid">
-        {webPackages.map((pkg, index) => (
-          <PackageCard key={pkg.key} pkg={pkg} index={index} onPackageClick={handlePackageClick} />
-        ))}
-      </div>
-
-      <motion.div
-        className="packages-subsection packages-subsection-social"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
-      >
-        <h3 className="packages-subsection-title">Društvene mreže</h3>
-        <p className="packages-subsection-description">
-          Preuzimamo planiranje, izradu i objavu sadržaja kako biste se vi mogli fokusirati na posao.
-        </p>
-      </motion.div>
-
-      <div className="packages-grid">
-        {socialPackages.map((pkg, index) => (
-          <PackageCard key={pkg.key} pkg={pkg} index={index} onPackageClick={handlePackageClick} />
-        ))}
-      </div>
-
-      <motion.div
-        className="packages-combo-cta"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6, delay: 0.1 }}
-      >
-        <h4 className="packages-combo-cta-title">Web + društvene mreže</h4>
-        <p className="packages-combo-cta-text">
-          Najbolji rezultati dolaze kada su web stranica i društvene mreže usklađeni. Zato nudimo i
-          kombinirane pakete za tvrtke koje žele kompletnu digitalnu prisutnost.
-        </p>
-        <button
-          type="button"
-          className="packages-combo-cta-button"
-          onClick={() => handlePackageClick('web-social')}
+      {settings.combo_enabled && (
+        <motion.div
+          className="packages-combo-cta"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.1 }}
         >
-          Zatraži kombiniranu ponudu
-        </button>
-      </motion.div>
+          <h4 className="packages-combo-cta-title">{settings.combo_title}</h4>
+          <p className="packages-combo-cta-text">{settings.combo_description}</p>
+          <button
+            type="button"
+            className="packages-combo-cta-button"
+            onClick={() => handlePackageClick(comboKey)}
+          >
+            {settings.combo_button_text}
+          </button>
+        </motion.div>
+      )}
 
-      <motion.div
-        className="packages-note"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6, delay: 0.4 }}
-      >
-        <p className="packages-note-text">
-          Paketi su polazna točka. Svaki projekt prilagođavamo stvarnim potrebama i ciljevima klijenta.
-        </p>
-      </motion.div>
+      {settings.footer_note && (
+        <motion.div
+          className="packages-note"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+        >
+          <p className="packages-note-text">{settings.footer_note}</p>
+        </motion.div>
+      )}
     </Section>
   )
 }

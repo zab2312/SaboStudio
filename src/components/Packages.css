@@ -2,6 +2,13 @@
   padding: var(--section-padding-y) var(--section-padding-x);
 }
 
+.packages-loading,
+.packages-error {
+  text-align: center;
+  color: rgba(245, 230, 211, 0.75);
+  margin-top: var(--space-xl);
+}
+
 .packages-subsection {
   margin-top: var(--space-xl);
 }

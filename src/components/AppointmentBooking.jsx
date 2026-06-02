@@ -5,7 +5,11 @@ import { format, addDays, addWeeks, startOfWeek, eachDayOfInterval, isSameDay, p
 import hr from 'date-fns/locale/hr'
 import Section from './Section'
 import PackageSelect from './PackageSelect'
-import { packageMap } from '../constants/packages'
+import {
+  fetchPackagesContent,
+  buildPackageGroups,
+  buildPackageMap,
+} from '../lib/packagesApi'
 import './AppointmentBooking.css'
 
 export default function AppointmentBooking() {
@@ -20,13 +24,29 @@ export default function AppointmentBooking() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitSuccess, setSubmitSuccess] = useState(false)
   const [weekOffset, setWeekOffset] = useState(0)
+  const [packageGroups, setPackageGroups] = useState([])
+  const [packageMap, setPackageMap] = useState({})
+
+  useEffect(() => {
+    const loadBookingPackages = async () => {
+      try {
+        const { settings, sections } = await fetchPackagesContent({ bookingOnly: true })
+        setPackageGroups(buildPackageGroups(sections, settings))
+        setPackageMap(buildPackageMap(sections, settings))
+      } catch (error) {
+        console.error('Error loading booking packages:', error)
+      }
+    }
+
+    loadBookingPackages()
+  }, [])
 
   // Read URL params on mount and handle package selection
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search)
     const packageParam = urlParams.get('paket')
-    
-    if (packageParam && packageMap[packageParam]) {
+
+    if (packageParam) {
       setSelectedPackage(packageParam)
       
       // Auto-scroll to booking section if package param exists
@@ -61,13 +81,13 @@ export default function AppointmentBooking() {
       // Start scrolling after component is mounted
       setTimeout(() => scrollToBooking(), 500)
     }
-  }, [])
+  }, [packageMap])
 
   // Listen for package selection events
   useEffect(() => {
     const handlePackageSelected = (event) => {
       const packageKey = event.detail?.packageKey
-      if (packageKey && packageMap[packageKey]) {
+      if (packageKey) {
         setSelectedPackage(packageKey)
         
         // Scroll to booking section when package is selected
@@ -98,7 +118,7 @@ export default function AppointmentBooking() {
 
     window.addEventListener('packageSelected', handlePackageSelected)
     return () => window.removeEventListener('packageSelected', handlePackageSelected)
-  }, [])
+  }, [packageMap])
 
   const currentDate = new Date()
   const baseWeekStart = startOfWeek(currentDate, { weekStartsOn: 1 })
@@ -363,6 +383,7 @@ export default function AppointmentBooking() {
             <label htmlFor="packageSelect">Paket</label>
             <PackageSelect
               id="packageSelect"
+              groups={packageGroups}
               value={selectedPackage}
               onChange={(packageValue) => {
                 setSelectedPackage(packageValue)

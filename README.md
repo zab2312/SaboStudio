@@ -84,8 +84,16 @@ Projekt koristi Supabase s sljedećim tablicama:
 - `appointments` - Rezervacije termina
 - `working_hours` - Radno vrijeme
 - `audit_requests` - Zahtjevi za besplatnu analizu
+- `packages_page_settings` - Glavni tekstovi sekcije paketa
+- `package_subsections` - Podsekcije (naslov + opis), svaka s vlastitim paketima
+- `service_packages` - Pojedinačni paketi unutar podsekcije
 
 SQL schema se nalazi u `supabase-schema.sql` datoteki.
+
+**Paketi usluga (CMS):**
+- Nova instalacija: pokreni `supabase-packages.sql`
+- Ako imaš staru verziju (s `section_type`): pokreni `supabase-packages-migrate-subsections.sql`
+- U adminu → **Paketi** → **Dodaj novu podsekciju**, zatim **Dodaj paket u ovu podsekciju**
 
 ## 📧 Email Obavijesti
 

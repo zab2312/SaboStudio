@@ -6,7 +6,8 @@ import 'react-quill/dist/quill.snow.css'
 import { supabase } from '../lib/supabase'
 import AdminLayout from '../components/AdminLayout'
 import Section from '../components/Section'
-import { packageMap } from '../constants/packages'
+import { buildPackageMap, fetchPackagesContent } from '../lib/packagesApi'
+import AdminPackagesPanel from '../components/admin/AdminPackagesPanel'
 import './Admin.css'
 
 export default function Admin() {
@@ -16,6 +17,7 @@ export default function Admin() {
   const [auditRequests, setAuditRequests] = useState([])
   const [testimonials, setTestimonials] = useState([])
   const [faqs, setFaqs] = useState([])
+  const [packageLabels, setPackageLabels] = useState({})
   const [workingHours, setWorkingHours] = useState([])
   const [loading, setLoading] = useState(true)
   const [showProjectModal, setShowProjectModal] = useState(false)
@@ -64,6 +66,7 @@ export default function Admin() {
       loadAuditRequests(),
       loadTestimonials(),
       loadFAQs(),
+      loadPackageLabels(),
       loadWorkingHours()
     ])
     setLoading(false)
@@ -115,6 +118,15 @@ export default function Admin() {
       .select('*')
       .order('order_index', { ascending: true })
     setFaqs(data || [])
+  }
+
+  const loadPackageLabels = async () => {
+    try {
+      const { settings, sections } = await fetchPackagesContent()
+      setPackageLabels(buildPackageMap(sections, settings))
+    } catch (error) {
+      console.error('Error loading package labels:', error)
+    }
   }
 
   const uploadImage = async (file) => {
@@ -444,6 +456,12 @@ export default function Admin() {
             FAQ
           </button>
           <button
+            className={`admin-tab ${activeTab === 'packages' ? 'active' : ''}`}
+            onClick={() => setActiveTab('packages')}
+          >
+            Paketi
+          </button>
+          <button
             className={`admin-tab ${activeTab === 'hours' ? 'active' : ''}`}
             onClick={() => setActiveTab('hours')}
           >
@@ -520,7 +538,7 @@ export default function Admin() {
                         {appointment.package_selected && (
                           <div className="appointment-package">
                             <Package size={16} />
-                            <span>{packageMap[appointment.package_selected] || appointment.package_selected}</span>
+                            <span>{packageLabels[appointment.package_selected] || appointment.package_selected}</span>
                           </div>
                         )}
                         <span className={`appointment-status ${appointment.status}`}>
@@ -677,6 +695,12 @@ export default function Admin() {
                 )}
               </div>
             )}
+          </div>
+        )}
+
+        {activeTab === 'packages' && (
+          <div className="admin-content">
+            <AdminPackagesPanel />
           </div>
         )}
 

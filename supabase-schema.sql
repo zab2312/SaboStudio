@@ -89,6 +89,51 @@ CREATE INDEX IF NOT EXISTS idx_faqs_order ON faqs(order_index);
 CREATE INDEX IF NOT EXISTS idx_audit_requests_status ON audit_requests(status);
 CREATE INDEX IF NOT EXISTS idx_audit_requests_created ON audit_requests(created_at);
 
+-- Packages CMS (see supabase-packages.sql for seed data)
+CREATE TABLE IF NOT EXISTS packages_page_settings (
+  id UUID PRIMARY KEY DEFAULT 'a0000000-0000-0000-0000-000000000001'::uuid,
+  page_title TEXT NOT NULL DEFAULT 'Paketi usluga',
+  page_description TEXT NOT NULL DEFAULT '',
+  combo_title TEXT NOT NULL DEFAULT 'Web + društvene mreže',
+  combo_description TEXT NOT NULL DEFAULT '',
+  combo_button_text TEXT NOT NULL DEFAULT 'Zatraži kombiniranu ponudu',
+  combo_package_key VARCHAR(50) NOT NULL DEFAULT 'web-social',
+  combo_booking_label TEXT NOT NULL DEFAULT 'Web + društvene mreže',
+  combo_enabled BOOLEAN NOT NULL DEFAULT true,
+  footer_note TEXT NOT NULL DEFAULT '',
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT TIMEZONE('utc', NOW())
+);
+
+CREATE TABLE IF NOT EXISTS package_subsections (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  title TEXT NOT NULL,
+  description TEXT NOT NULL DEFAULT '',
+  sort_order INTEGER NOT NULL DEFAULT 0,
+  is_published BOOLEAN NOT NULL DEFAULT true,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT TIMEZONE('utc', NOW()),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT TIMEZONE('utc', NOW())
+);
+
+CREATE TABLE IF NOT EXISTS service_packages (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  section_id UUID NOT NULL REFERENCES package_subsections(id) ON DELETE CASCADE,
+  package_key VARCHAR(50) NOT NULL UNIQUE,
+  name TEXT NOT NULL,
+  description TEXT NOT NULL DEFAULT '',
+  features TEXT[] NOT NULL DEFAULT '{}',
+  price TEXT NOT NULL DEFAULT '',
+  is_popular BOOLEAN NOT NULL DEFAULT false,
+  sort_order INTEGER NOT NULL DEFAULT 0,
+  is_published BOOLEAN NOT NULL DEFAULT true,
+  show_in_booking BOOLEAN NOT NULL DEFAULT true,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT TIMEZONE('utc', NOW()),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT TIMEZONE('utc', NOW())
+);
+
+CREATE INDEX IF NOT EXISTS idx_package_subsections_sort ON package_subsections(sort_order);
+CREATE INDEX IF NOT EXISTS idx_service_packages_section ON service_packages(section_id, sort_order);
+CREATE INDEX IF NOT EXISTS idx_service_packages_published ON service_packages(is_published);
+
 -- Create storage bucket for project images
 INSERT INTO storage.buckets (id, name, public)
 VALUES ('project-images', 'project-images', true)
